@@ -3,5 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="Engine/Engine.vcxproj" Id="8d074337-7cad-4d2e-97f4-18e2f75bee49" />
+  <Project Path="EngineTest/EngineTest.vcxproj" Id="c2d17e68-901a-4f2a-a07d-bcad28485588" />
   <Project Path="Rogalique.vcxproj" Id="b142284f-5f81-406b-bbf2-8a34cb66a282" />
 </Solution>
