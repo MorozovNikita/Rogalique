@@ -77,6 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,6 +96,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +132,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,28 +144,99 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="DeveloperLevel.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="Engine\AudioComponent.cpp" />
+    <ClCompile Include="Engine\CameraComponent.cpp" />
+    <ClCompile Include="Engine\ChaseComponent.cpp" />
+    <ClCompile Include="Engine\ColliderComponent.cpp" />
+    <ClCompile Include="Engine\Collision.cpp" />
+    <ClCompile Include="Engine\Component.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp">
+      <ObjectFileName>$(IntDir)EngineGameObject.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Engine\GameWorld.cpp" />
+    <ClCompile Include="Engine\InputComponent.cpp" />
+    <ClCompile Include="Engine\Matrix2D.cpp" />
+    <ClCompile Include="Engine\MovementComponent.cpp" />
+    <ClCompile Include="Engine\PhysicsSystem.cpp" />
+    <ClCompile Include="Engine\RenderSystem.cpp" />
+    <ClCompile Include="Engine\ResourceSystem.cpp" />
+    <ClCompile Include="Engine\RigidbodyComponent.cpp" />
+    <ClCompile Include="Engine\SpriteColliderComponent.cpp" />
+    <ClCompile Include="Engine\SpriteDirectionComponent.cpp" />
+    <ClCompile Include="Engine\SpriteMovementAnimationComponent.cpp" />
+    <ClCompile Include="Engine\SpriteRendererComponent.cpp" />
+    <ClCompile Include="Engine\TransformComponent.cpp" />
+    <ClCompile Include="Engine\Trigger.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="DeveloperLevel.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IObserver.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Music.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="ResourceIdentifiers.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
+    <ClInclude Include="Engine\AudioComponent.h" />
+    <ClInclude Include="Engine\CameraComponent.h" />
+    <ClInclude Include="Engine\ChaseComponent.h" />
+    <ClInclude Include="Engine\ColliderComponent.h" />
+    <ClInclude Include="Engine\Collision.h" />
+    <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\DirectionComponent.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\framework.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameWorld.h" />
+    <ClInclude Include="Engine\InputComponent.h" />
+    <ClInclude Include="Engine\Matrix2D.h" />
+    <ClInclude Include="Engine\MovementComponent.h" />
+    <ClInclude Include="Engine\pch.h" />
+    <ClInclude Include="Engine\PhysicsSystem.h" />
+    <ClInclude Include="Engine\RenderSystem.h" />
+    <ClInclude Include="Engine\ResourceSystem.h" />
+    <ClInclude Include="Engine\RigidbodyComponent.h" />
+    <ClInclude Include="Engine\Scene.h" />
+    <ClInclude Include="Engine\SpriteColliderComponent.h" />
+    <ClInclude Include="Engine\SpriteDirectionComponent.h" />
+    <ClInclude Include="Engine\SpriteMovementAnimationComponent.h" />
+    <ClInclude Include="Engine\SpriteRendererComponent.h" />
+    <ClInclude Include="Engine\TransformComponent.h" />
+    <ClInclude Include="Engine\Trigger.h" />
+    <ClInclude Include="Engine\Vector.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Engine\Engine.vcxproj">
+      <Project>{8d074337-7cad-4d2e-97f4-18e2f75bee49}</Project>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,7 +28,7 @@ public:
 	struct Context
 	{
 		Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers,
-			Game::Settings& settings);
+			    Game::Settings& settings);
 
 		sf::RenderWindow&  window;
 		FontHolder&		   fonts;
