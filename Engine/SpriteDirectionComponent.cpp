@@ -7,17 +7,22 @@ namespace Engine
 	SpriteDirectionComponent::SpriteDirectionComponent(GameObject* gameObject)
 		: Component(gameObject)
 	{
-		input = gameObject->GetComponent<InputComponent>();
+		direction = gameObject->GetComponent<DirectionComponent>();
 		spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 	}
 
 	void SpriteDirectionComponent::Update(float deltaTime)
 	{
-		if (input->GetHorizontalAxis() < 0)
+		if (direction == nullptr || spriteRenderer == nullptr)
+		{
+			return;
+		}
+
+		if (direction->GetHorizontalAxis() < 0)
 		{
 			spriteRenderer->FlipX(true);
 		}
-		if (input->GetHorizontalAxis() > 0)
+		if (direction->GetHorizontalAxis() > 0)
 		{
 			spriteRenderer->FlipX(false);
 		}

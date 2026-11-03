@@ -7,22 +7,19 @@ namespace Engine
 	MovementComponent::MovementComponent(GameObject* gameObject)
 		: Component(gameObject)
 	{
-		input = gameObject->GetComponent<InputComponent>();
+		direction = gameObject->GetComponent<DirectionComponent>();
 		transform = gameObject->GetComponent<TransformComponent>();
-
-		if (input == nullptr)
-		{
-			std::cout << "Need input component for movement" << std::endl;
-			gameObject->RemoveComponent(this);
-		}
 	}
 
 	void MovementComponent::Update(float deltaTime)
 	{
-		float xAxis = input->GetHorizontalAxis();
-		float yAxis = input->GetVerticalAxis();
+		Vector2Df axis = { 0.f, 0.f };
+		if (direction != nullptr)
+		{
+			axis = { direction->GetHorizontalAxis(), direction->GetVerticalAxis() };
+		}
 
-		transform->MoveBy(speed * deltaTime * Vector2Df{ xAxis, yAxis });
+		transform->MoveBy(speed * deltaTime * axis);
 
 		acceleration = transform->GetWorldPosition() - previousPosition;
 		previousPosition = transform->GetWorldPosition();

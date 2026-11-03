@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "InputComponent.h"
+#include "DirectionComponent.h"
 
 namespace Engine
 {
@@ -16,7 +16,7 @@ namespace Engine
 		float GetSpeed() const;
 		float GetAccelerationSquared() const;
 	private:
-		InputComponent* input;
+		DirectionComponent* direction = nullptr;
 		TransformComponent* transform;
 
 		float speed = 0;

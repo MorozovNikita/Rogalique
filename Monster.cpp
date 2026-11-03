@@ -2,6 +2,7 @@
 
 #include <ResourceSystem.h>
 #include <SpriteColliderComponent.h>
+#include <ChaseComponent.h>
 #include <MovementComponent.h>
 #include <SpriteDirectionComponent.h>
 #include <SpriteMovementAnimationComponent.h>
@@ -21,7 +22,7 @@ namespace Roguelike
 		}
 		renderer->SetPixelSize(100, 100);
 
-		auto input = gameObject->AddComponent<Engine::InputComponent>();
+		gameObject->AddComponent<Engine::ChaseComponent>();
 
 		auto movement = gameObject->AddComponent<Engine::MovementComponent>();
 		movement->SetSpeed(450.f);

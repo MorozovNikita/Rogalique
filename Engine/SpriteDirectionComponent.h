@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "InputComponent.h"
+#include "DirectionComponent.h"
 #include "SpriteRendererComponent.h"
 
 namespace Engine
@@ -13,7 +13,7 @@ namespace Engine
 		void Update(float deltaTime) override;
 		void Render() override;
 	private:
-		InputComponent* input;
+		DirectionComponent* direction = nullptr;
 		SpriteRendererComponent* spriteRenderer;
 	};
 }

@@ -51,6 +51,9 @@
     <ClCompile Include="Engine\CameraComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ChaseComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\ColliderComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -173,6 +176,9 @@
     <ClInclude Include="Engine\CameraComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ChaseComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\ColliderComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -180,6 +186,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DirectionComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Engine.h">

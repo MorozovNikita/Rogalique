@@ -3,7 +3,7 @@
 
 namespace Engine
 {
-	InputComponent::InputComponent(GameObject* gameObject) : Component(gameObject) {}
+	InputComponent::InputComponent(GameObject* gameObject) : DirectionComponent(gameObject) {}
 
 	void InputComponent::Update(float deltaTime)
 	{

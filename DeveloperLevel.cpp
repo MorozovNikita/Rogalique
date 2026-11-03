@@ -66,6 +66,7 @@ namespace Roguelike
 	void DeveloperLevel::Stop()
 	{
 		player.reset();
+		monster.reset();
 		music.reset();
 		walls.clear();
 		floors.clear();

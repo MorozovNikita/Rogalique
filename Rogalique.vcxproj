@@ -157,6 +157,7 @@
     <ClCompile Include="StateStack.cpp" />
     <ClCompile Include="Engine\AudioComponent.cpp" />
     <ClCompile Include="Engine\CameraComponent.cpp" />
+    <ClCompile Include="Engine\ChaseComponent.cpp" />
     <ClCompile Include="Engine\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
@@ -201,9 +202,11 @@
     <ClInclude Include="StateStack.h" />
     <ClInclude Include="Engine\AudioComponent.h" />
     <ClInclude Include="Engine\CameraComponent.h" />
+    <ClInclude Include="Engine\ChaseComponent.h" />
     <ClInclude Include="Engine\ColliderComponent.h" />
     <ClInclude Include="Engine\Collision.h" />
     <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\DirectionComponent.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\framework.h" />
     <ClInclude Include="Engine\GameObject.h" />

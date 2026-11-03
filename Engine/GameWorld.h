@@ -17,6 +17,8 @@ namespace Engine
 
 		GameObject* CreateGameObject();
 		GameObject* CreateGameObject(std::string name);
+		GameObject* FindGameObject(const std::string& name) const;
+		std::vector<GameObject*> FindGameObjects(const std::string& name) const;
 		void DestroyGameObject(GameObject* gameObject);
 		void Clear();
 

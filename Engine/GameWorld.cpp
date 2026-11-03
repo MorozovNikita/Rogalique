@@ -57,6 +57,33 @@ namespace Engine
 		return newGameObject;
 	}
 
+	GameObject* GameWorld::FindGameObject(const std::string& name) const
+	{
+		for (size_t i = 0; i < gameObjects.size(); i++)
+		{
+			if (gameObjects[i] != nullptr && gameObjects[i]->GetName() == name)
+			{
+				return gameObjects[i];
+			}
+		}
+
+		return nullptr;
+	}
+
+	std::vector<GameObject*> GameWorld::FindGameObjects(const std::string& name) const
+	{
+		std::vector<GameObject*> found;
+		for (size_t i = 0; i < gameObjects.size(); i++)
+		{
+			if (gameObjects[i] != nullptr && gameObjects[i]->GetName() == name)
+			{
+				found.push_back(gameObjects[i]);
+			}
+		}
+
+		return found;
+	}
+
 	void GameWorld::DestroyGameObject(GameObject* gameObject)
 	{
 		markedToDestroyGameObjects.push_back(gameObject);
