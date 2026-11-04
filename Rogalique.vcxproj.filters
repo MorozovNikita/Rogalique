@@ -54,6 +54,9 @@
     <ClCompile Include="Engine\ChaseComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GridPath.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\ColliderComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -177,6 +180,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ChaseComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GridPath.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ColliderComponent.h">

@@ -11,10 +11,23 @@ namespace Engine
 {
 	class GameObject;
 
+	struct ChaseSettings
+	{
+		GameObject* target = nullptr;
+		float cellSize = 0.f;
+		std::set<std::pair<int, int>> walkable;
+		float detectionRadius = 0.f;
+		float stopDistance = 0.f;
+	};
+
 	class ChaseComponent : public DirectionComponent
 	{
 	public:
+		using Cell = std::pair<int, int>;
+
 		ChaseComponent(GameObject* gameObject);
+
+		void Initialize(const ChaseSettings& settings);
 
 		void Update(float deltaTime) override;
 		void Render() override;
@@ -22,13 +35,10 @@ namespace Engine
 		float GetHorizontalAxis() const override;
 		float GetVerticalAxis() const override;
 	private:
-		using Cell = std::pair<int, int>;
-
-		void BuildWalkable();
-		void BuildPath(const Cell& from, const Cell& to);
 		Cell ToCell(const Vector2Df& position) const;
+		void Stop();
 
-		GameObject* player = nullptr;
+		GameObject* target = nullptr;
 
 		float horizontalAxis = 0.f;
 		float verticalAxis = 0.f;
@@ -37,9 +47,11 @@ namespace Engine
 		std::vector<Cell> path;
 
 		size_t waypointIndex = 0;
-		Cell lastPlayerCell = { -1, -1 };
-		bool hasPlayerCell = false;
+		Cell lastTargetCell = { -1, -1 };
+		bool hasTargetCell = false;
 
-		float tileSize = 128.f;
+		float cellSize = 0.f;
+		float detectionRadius = 0.f;
+		float stopDistance = 0.f;
 	};
 }
