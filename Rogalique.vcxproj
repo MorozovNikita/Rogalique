@@ -158,6 +158,7 @@
     <ClCompile Include="Engine\AudioComponent.cpp" />
     <ClCompile Include="Engine\CameraComponent.cpp" />
     <ClCompile Include="Engine\ChaseComponent.cpp" />
+    <ClCompile Include="Engine\GridPath.cpp" />
     <ClCompile Include="Engine\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Engine\AudioComponent.h" />
     <ClInclude Include="Engine\CameraComponent.h" />
     <ClInclude Include="Engine\ChaseComponent.h" />
+    <ClInclude Include="Engine\GridPath.h" />
     <ClInclude Include="Engine\ColliderComponent.h" />
     <ClInclude Include="Engine\Collision.h" />
     <ClInclude Include="Engine\Component.h" />
