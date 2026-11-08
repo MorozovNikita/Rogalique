@@ -38,9 +38,9 @@ namespace Engine
 					{
 						if (triggersEnteredPair.find(colliders[i]) == triggersEnteredPair.end() && triggersEnteredPair.find(colliders[j]) == triggersEnteredPair.end())
 						{
-							auto trigger = new Trigger(colliders[i], colliders[j]);
-							colliders[i]->OnTriggerEnter(*trigger);
-							colliders[j]->OnTriggerEnter(*trigger);
+							Trigger trigger(colliders[i], colliders[j]);
+							colliders[i]->OnTriggerEnter(trigger);
+							colliders[j]->OnTriggerEnter(trigger);
 
 							triggersEnteredPair.emplace(colliders[i], colliders[j]);
 						}
@@ -81,9 +81,9 @@ namespace Engine
 							}
 						}
 
-						auto collision = new Collision(colliders[i], colliders[j], *intersection);
-						colliders[i]->OnCollision(*collision);
-						colliders[j]->OnCollision(*collision);
+						Collision collision(colliders[i], colliders[j], *intersection);
+						colliders[i]->OnCollision(collision);
+						colliders[j]->OnCollision(collision);
 					}
 				}
 			}
@@ -94,9 +94,9 @@ namespace Engine
 			++nextTriggeredPair;
 			if (!triggeredPair->first->bounds.findIntersection(triggeredPair->second->bounds))
 			{
-				auto trigger = new Trigger(triggeredPair->first, triggeredPair->second);
-				triggeredPair->first->OnTriggerExit(*trigger);
-				triggeredPair->second->OnTriggerExit(*trigger);
+				Trigger trigger(triggeredPair->first, triggeredPair->second);
+				triggeredPair->first->OnTriggerExit(trigger);
+				triggeredPair->second->OnTriggerExit(trigger);
 
 				triggersEnteredPair.erase(triggeredPair);
 			}

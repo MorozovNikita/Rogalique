@@ -1,13 +1,10 @@
 #include "pch.h"
 #include "ChaseComponent.h"
 
-#include "GameWorld.h"
+#include "GridPath.h"
 #include "TransformComponent.h"
 
-#include <algorithm>
 #include <cmath>
-#include <map>
-#include <queue>
 
 namespace Engine
 {
@@ -15,30 +12,65 @@ namespace Engine
 	ChaseComponent::ChaseComponent(GameObject* gameObject)
 		: DirectionComponent(gameObject)
 	{
-		BuildWalkable();
+	}
+
+	void ChaseComponent::Initialize(const ChaseSettings& settings)
+	{
+		target = settings.target;
+		cellSize = settings.cellSize;
+		walkable = settings.walkable;
+		detectionRadius = settings.detectionRadius;
+		stopDistance = settings.stopDistance;
+		hasTargetCell = false;
+		path.clear();
+		waypointIndex = 0;
 	}
 
 	void ChaseComponent::Update(float deltaTime)
 	{
-		if (player == nullptr)
+		if (target == nullptr || cellSize == 0.f)
 		{
-			player = GameWorld::Instance()->FindGameObject("Player");
-		}
-		if (player == nullptr)
-		{
-			horizontalAxis = 0.f;
-			verticalAxis = 0.f;
+			Stop();
 			return;
 		}
 
-		const Cell selfCell = ToCell(m_gameObject->GetComponent<TransformComponent>()->GetWorldPosition());
-		const Cell playerCell = ToCell(player->GetComponent<TransformComponent>()->GetWorldPosition());
+		const Vector2Df selfPosition = m_gameObject->GetComponent<TransformComponent>()->GetWorldPosition();
+		const Vector2Df targetPosition = target->GetComponent<TransformComponent>()->GetWorldPosition();
+		const float offsetX = targetPosition.x - selfPosition.x;
+		const float offsetY = targetPosition.y - selfPosition.y;
+		const float distanceSquared = offsetX * offsetX + offsetY * offsetY;
 
-		if (!hasPlayerCell || playerCell != lastPlayerCell)
+		if (distanceSquared > detectionRadius * detectionRadius)
 		{
-			lastPlayerCell = playerCell;
-			hasPlayerCell = true;
-			BuildPath(selfCell, playerCell);
+			hasTargetCell = false;
+			path.clear();
+			Stop();
+			return;
+		}
+
+		const Cell selfCell = ToCell(selfPosition);
+		const Cell targetCell = ToCell(targetPosition);
+
+		if (selfCell == targetCell)
+		{
+			if (distanceSquared <= stopDistance * stopDistance)
+			{
+				Stop();
+				return;
+			}
+
+			const float distance = std::sqrt(distanceSquared);
+			horizontalAxis = offsetX / distance;
+			verticalAxis = offsetY / distance;
+			return;
+		}
+
+		if (!hasTargetCell || targetCell != lastTargetCell)
+		{
+			lastTargetCell = targetCell;
+			hasTargetCell = true;
+			path = FindPathBFS(walkable, selfCell, targetCell);
+			waypointIndex = 0;
 		}
 
 		while (waypointIndex < path.size() && path[waypointIndex] == selfCell)
@@ -85,93 +117,19 @@ namespace Engine
 	{
 	}
 
-	void ChaseComponent::BuildWalkable()
-	{
-		walkable.clear();
-
-		const auto floors = GameWorld::Instance()->FindGameObjects("Floor");
-		for (size_t i = 0; i < floors.size(); i++)
-		{
-			walkable.insert(ToCell(floors[i]->GetComponent<TransformComponent>()->GetWorldPosition()));
-		}
-
-		const auto walls = GameWorld::Instance()->FindGameObjects("Wall");
-		for (size_t i = 0; i < walls.size(); i++)
-		{
-			walkable.erase(ToCell(walls[i]->GetComponent<TransformComponent>()->GetWorldPosition()));
-		}
-	}
-
-	void ChaseComponent::BuildPath(const Cell& from, const Cell& to)
-	{
-		path.clear();
-		waypointIndex = 0;
-
-		if (walkable.find(from) == walkable.end() || walkable.find(to) == walkable.end())
-		{
-			return;
-		}
-
-		if (from == to)
-		{
-			path.push_back(from);
-			return;
-		}
-
-		std::map<Cell, Cell> cameFrom;
-		std::set<Cell> visited;
-		std::queue<Cell> frontier;
-		frontier.push(from);
-		visited.insert(from);
-
-		const int offsetX[4] = { 1, -1, 0, 0 };
-		const int offsetY[4] = { 0, 0, 1, -1 };
-		bool found = false;
-
-		while (!frontier.empty())
-		{
-			const Cell current = frontier.front();
-			frontier.pop();
-			if (current == to)
-			{
-				found = true;
-				break;
-			}
-
-			for (int i = 0; i < 4; i++)
-			{
-				const Cell next = { current.first + offsetX[i], current.second + offsetY[i] };
-				if (walkable.find(next) == walkable.end() || visited.find(next) != visited.end())
-				{
-					continue;
-				}
-
-				visited.insert(next);
-				cameFrom[next] = current;
-				frontier.push(next);
-			}
-		}
-
-		if (!found)
-		{
-			return;
-		}
-
-		for (Cell cell = to; cell != from; cell = cameFrom[cell])
-		{
-			path.push_back(cell);
-		}
-		path.push_back(from);
-		std::reverse(path.begin(), path.end());
-	}
-
 	ChaseComponent::Cell ChaseComponent::ToCell(const Vector2Df& position) const
 	{
 		return
 		{
-			static_cast<int>(std::round(position.x / tileSize)),
-			static_cast<int>(std::round(position.y / tileSize))
+			static_cast<int>(std::round(position.x / cellSize)),
+			static_cast<int>(std::round(position.y / cellSize))
 		};
+	}
+
+	void ChaseComponent::Stop()
+	{
+		horizontalAxis = 0.f;
+		verticalAxis = 0.f;
 	}
 
 }

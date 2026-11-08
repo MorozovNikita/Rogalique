@@ -9,7 +9,7 @@
 
 namespace Roguelike
 {
-	Monster::Monster(const Engine::Vector2Df& position)
+	Monster::Monster(const Engine::Vector2Df& position, const Engine::ChaseSettings& chaseSettings)
 	{
 		gameObject = Engine::GameWorld::Instance()->CreateGameObject("Monster");
 		auto transform = gameObject->GetComponent<Engine::TransformComponent>();
@@ -22,7 +22,8 @@ namespace Roguelike
 		}
 		renderer->SetPixelSize(100, 100);
 
-		gameObject->AddComponent<Engine::ChaseComponent>();
+		auto chase = gameObject->AddComponent<Engine::ChaseComponent>();
+		chase->Initialize(chaseSettings);
 
 		auto movement = gameObject->AddComponent<Engine::MovementComponent>();
 		movement->SetSpeed(450.f);
