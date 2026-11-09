@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "SpriteColliderComponent.h"
 
+#include <stdexcept>
+
 namespace Engine
 {
 	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject)
@@ -8,8 +10,7 @@ namespace Engine
 		renderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (renderer == nullptr)
 		{
-			std::cout << "SpriteRenderer required to SpriteCollider." << std::endl;
-			return;
+			throw std::logic_error("SpriteRenderer required to SpriteCollider");
 		}
 
 		sprite = renderer->GetSprite();

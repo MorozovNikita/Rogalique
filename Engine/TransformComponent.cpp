@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "TransformComponent.h"
 
+#include "Logger.h"
+
 #include <cmath>
-#include <iostream>
+#include <sstream>
 
 namespace Engine
 {
@@ -264,19 +266,14 @@ namespace Engine
 
 	void TransformComponent::Print() const
 	{
-		std::cout << "Transform name : " << m_gameObject->GetName() << std::endl;
-
-		std::cout << "Position" << std::endl;
-		std::cout << "  World: (" << GetWorldPosition().x << ", " << GetWorldPosition().y << ")" << std::endl;
-		std::cout << "  Local: (" << GetLocalPosition().x << ", " << GetLocalPosition().y << ")" << std::endl;
-
-		std::cout << "Rotation" << std::endl;
-		std::cout << "  World: " << GetWorldRotation() << std::endl;
-		std::cout << "  Local: " << GetLocalRotation() << std::endl;
-
-		std::cout << "Scale" << std::endl;
-		std::cout << "  World: (" << GetWorldScale().x << ", " << GetWorldScale().y << ")" << std::endl;
-		std::cout << "  Local: (" << GetLocalScale().x << ", " << GetLocalScale().y << ")" << std::endl;
+		std::ostringstream stream;
+		stream << "Transform " << m_gameObject->GetName()
+			<< " world=(" << GetWorldPosition().x << ", " << GetWorldPosition().y << ")"
+			<< " local=(" << GetLocalPosition().x << ", " << GetLocalPosition().y << ")"
+			<< " rotation world=" << GetWorldRotation() << " local=" << GetLocalRotation()
+			<< " scale world=(" << GetWorldScale().x << ", " << GetWorldScale().y << ")"
+			<< " local=(" << GetLocalScale().x << ", " << GetLocalScale().y << ")";
+		LOG_INFO(stream.str());
 	}
 
 	void TransformComponent::setWorldInfoFrom(const Matrix2D& transform) const

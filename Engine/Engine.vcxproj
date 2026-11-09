@@ -151,6 +151,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ChaseComponent.h" />
@@ -163,7 +164,9 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="StatsComponent.h" />
     <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Matrix2D.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="pch.h" />
@@ -181,6 +184,7 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />

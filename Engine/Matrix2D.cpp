@@ -1,5 +1,8 @@
 #include "pch.h"
-#include "Matrix2D.h" 
+#include "Matrix2D.h"
+#include "Logger.h"
+
+#include <sstream> 
 
 constexpr float PI = 3.14159265358979323846f;
 
@@ -126,15 +129,16 @@ namespace Engine
 
 	void Matrix2D::Print() const
 	{
+		std::ostringstream stream;
 		for (int row = 0; row < 3; ++row)
 		{
-			std::cout << "| ";
+			stream << "| ";
 			for (int col = 0; col < 3; ++col)
 			{
-				std::cout << m[row][col] << " ";
+				stream << m[row][col] << " ";
 			}
-			std::cout << "|\n";
+			stream << "| ";
 		}
-		std::cout << "\n";
+		LOG_INFO(stream.str());
 	}
 }

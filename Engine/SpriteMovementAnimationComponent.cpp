@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "SpriteMovementAnimationComponent.h"
 
+#include <stdexcept>
+
 namespace Engine
 {
 
@@ -12,11 +14,11 @@ namespace Engine
 
 		if (movement == nullptr)
 		{
-			std::cout << "Need movement component for movement animation" << std::endl;
+			throw std::logic_error("Need movement component for movement animation");
 		}
-		else if (renderer == nullptr)
+		if (renderer == nullptr)
 		{
-			std::cout << "Need renderer component for movement animation" << std::endl;
+			throw std::logic_error("Need renderer component for movement animation");
 		}
 	}
 

@@ -2,6 +2,9 @@
 
 #include <SpriteColliderComponent.h>
 
+#include <stdexcept>
+#include <string>
+
 namespace Roguelike
 {
 
@@ -11,8 +14,14 @@ namespace Roguelike
 		auto transform = gameObject->GetComponent<Engine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
+		const auto* texture = Engine::ResourceSystem::Instance()->GetTextureMapElementShared("level_walls", textureMapIndex);
+		if (texture == nullptr)
+		{
+			throw std::runtime_error("Wall texture is missing at index " + std::to_string(textureMapIndex));
+		}
+
 		auto renderer = gameObject->AddComponent<Engine::SpriteRendererComponent>();
-		renderer->SetTexture(*Engine::ResourceSystem::Instance()->GetTextureMapElementShared("level_walls", textureMapIndex));
+		renderer->SetTexture(*texture);
 		renderer->SetPixelSize(128, 128);
 
 		auto rigidbody = gameObject->AddComponent<Engine::RigidbodyComponent>();

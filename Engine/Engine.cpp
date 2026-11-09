@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "Engine.h"
 #include "GameWorld.h"
+#include "Logger.h"
 #include "RenderSystem.h"
 
-#include <iostream>
+#include <exception>
+#include <string>
 
 namespace Engine
 {
@@ -27,31 +29,42 @@ namespace Engine
 
 		sf::Clock gameClock;
 
-		while (window.isOpen())
+		try
 		{
-			sf::Time dt = gameClock.restart();
-			float deltaTime = dt.asSeconds();
-
-			while (const std::optional<sf::Event> event = window.pollEvent())
+			while (window.isOpen())
 			{
-				if (event->is<sf::Event::Closed>())
+				sf::Time dt = gameClock.restart();
+				float deltaTime = dt.asSeconds();
+
+				while (const std::optional<sf::Event> event = window.pollEvent())
 				{
-					window.close();
+					if (event->is<sf::Event::Closed>())
+					{
+						window.close();
+					}
 				}
-			}
 
-			if (!window.isOpen())
+				if (!window.isOpen())
+				{
+					break;
+				}
+
+				window.clear();
+
+				GameWorld::Instance()->FixedUpdate(deltaTime);
+				GameWorld::Instance()->Render();
+				GameWorld::Instance()->LateUpdate();
+
+				window.display();
+			}
+		}
+		catch (const std::exception& exception)
+		{
+			LOG_ERROR(std::string("Engine stopped: ") + exception.what());
+			if (window.isOpen())
 			{
-				break;
+				window.close();
 			}
-
-			window.clear();
-
-			GameWorld::Instance()->FixedUpdate(deltaTime);
-			GameWorld::Instance()->Render();
-			GameWorld::Instance()->LateUpdate();
-
-			window.display();
 		}
 	}
 }
