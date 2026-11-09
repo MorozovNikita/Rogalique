@@ -12,6 +12,13 @@
 
 namespace Engine
 {
+	struct CollisionLayer
+	{
+		static constexpr unsigned int World = 1u << 0;
+		static constexpr unsigned int Actor = 1u << 1;
+		static constexpr unsigned int All = ~0u;
+	};
+
 	class ColliderComponent : public Component
 	{
 	public:
@@ -21,6 +28,10 @@ namespace Engine
 		virtual void Render() = 0;
 
 		void SetTrigger(bool newIsTrigger);
+		void SetCollisionLayer(unsigned int newLayer);
+		void SetCollisionMask(unsigned int newMask);
+		unsigned int GetCollisionLayer() const;
+		unsigned int GetCollisionMask() const;
 
 		void SubscribeCollision(std::function<void(Collision)> onCollisionAction);
 		void UnsubscribeCollision(std::function<void(Collision)> onCollisionAction);
@@ -36,6 +47,8 @@ namespace Engine
 	protected:
 		sf::FloatRect bounds;
 		bool isTrigger = false;
+		unsigned int layer = CollisionLayer::World;
+		unsigned int mask = CollisionLayer::All;
 
 		void OnCollision(Collision collision);
 		void OnTriggerEnter(Trigger trigger);

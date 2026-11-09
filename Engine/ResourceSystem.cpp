@@ -3,6 +3,11 @@
 
 namespace Engine
 {
+	ResourceSystem::~ResourceSystem()
+	{
+		Clear();
+	}
+
 	ResourceSystem* ResourceSystem::Instance()
 	{
 		static ResourceSystem resourceSystem;
@@ -21,6 +26,10 @@ namespace Engine
 		{
 			newTexture->setSmooth(isSmooth);
 			textures.emplace(name, newTexture);
+		}
+		else
+		{
+			delete newTexture;
 		}
 	}
 
@@ -69,7 +78,7 @@ namespace Engine
 		sf::Texture textureMap;
 		if (textureMap.loadFromFile(sourcePath))
 		{
-			auto textureMapElements = new std::vector<sf::Texture*>();
+			std::vector<sf::Texture*> textureMapElements;
 
 			auto textureSize = textureMap.getSize();
 			int loadedElements = 0;
@@ -92,13 +101,17 @@ namespace Engine
 					if (newTextureMapElement->loadFromFile(sourcePath, false, sf::IntRect({ x, y }, { static_cast<int>(elementPixelSize.x), static_cast<int>(elementPixelSize.y) })))
 					{
 						newTextureMapElement->setSmooth(isSmooth);
-						textureMapElements->push_back(newTextureMapElement);
+						textureMapElements.push_back(newTextureMapElement);
+					}
+					else
+					{
+						delete newTextureMapElement;
 					}
 					loadedElements++;
 				}
 			}
 
-			textureMaps.emplace(name, *textureMapElements);
+			textureMaps.emplace(name, std::move(textureMapElements));
 		}
 	}
 

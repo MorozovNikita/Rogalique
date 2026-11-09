@@ -13,12 +13,10 @@ namespace Engine
 		if (movement == nullptr)
 		{
 			std::cout << "Need movement component for movement animation" << std::endl;
-			gameObject->RemoveComponent(this);
 		}
 		else if (renderer == nullptr)
 		{
 			std::cout << "Need renderer component for movement animation" << std::endl;
-			gameObject->RemoveComponent(this);
 		}
 	}
 
@@ -35,7 +33,7 @@ namespace Engine
 
 	void SpriteMovementAnimationComponent::Update(float deltaTime)
 	{
-		if (textureMap.empty())
+		if (movement == nullptr || renderer == nullptr || textureMap.empty())
 		{
 			return;
 		}

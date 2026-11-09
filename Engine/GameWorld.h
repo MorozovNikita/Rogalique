@@ -25,7 +25,7 @@ namespace Engine
 		void Print() const;
 	private:
 		GameWorld() {}
-		~GameWorld() {}
+		~GameWorld();
 
 		GameWorld(GameWorld const&) = delete;
 		GameWorld& operator= (GameWorld const&) = delete;

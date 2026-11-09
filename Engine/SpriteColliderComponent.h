@@ -17,6 +17,7 @@ namespace Engine
 		void Update(float deltaTime) override;
 		void Render() override;
 	private:
-		const sf::Sprite* sprite;
+		SpriteRendererComponent* renderer = nullptr;
+		const sf::Sprite* sprite = nullptr;
 	};
 }

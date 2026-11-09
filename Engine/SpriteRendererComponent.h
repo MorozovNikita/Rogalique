@@ -17,6 +17,7 @@ namespace Engine
 		void Update(float deltaTime) override;
 		void Render() override;
 
+		void ApplyTransform();
 		const sf::Sprite* GetSprite() const;
 		void SetTexture(const sf::Texture& newTexture);
 		void SetPixelSize(int newWidth, int newHeight);

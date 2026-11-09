@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "MovementComponent.h"
 
+#include <cmath>
+
 namespace Engine
 {
 
@@ -17,6 +19,14 @@ namespace Engine
 		if (direction != nullptr)
 		{
 			axis = { direction->GetHorizontalAxis(), direction->GetVerticalAxis() };
+		}
+
+		const float lengthSquared = axis.x * axis.x + axis.y * axis.y;
+		if (lengthSquared > 1.f)
+		{
+			const float inverseLength = 1.f / std::sqrt(lengthSquared);
+			axis.x *= inverseLength;
+			axis.y *= inverseLength;
 		}
 
 		transform->MoveBy(speed * deltaTime * axis);

@@ -1,8 +1,72 @@
 #include "pch.h"
 #include "PhysicsSystem.h"
 
+#include "TransformComponent.h"
+
+#include <algorithm>
+
 namespace Engine
 {
+	namespace
+	{
+		bool physicsAlive = false;
+
+		sf::Vector2f CenterOf(const sf::FloatRect& rect)
+		{
+			return { rect.position.x + rect.size.x * 0.5f, rect.position.y + rect.size.y * 0.5f };
+		}
+
+		bool IsKinematic(ColliderComponent* collider)
+		{
+			auto* body = collider->GetGameObject()->GetComponent<RigidbodyComponent>();
+			return body == nullptr || body->GetKinematic();
+		}
+
+		bool CanInteract(const ColliderComponent* first, const ColliderComponent* second)
+		{
+			return (first->GetCollisionMask() & second->GetCollisionLayer()) != 0
+				&& (second->GetCollisionMask() & first->GetCollisionLayer()) != 0;
+		}
+
+		void PushOut(ColliderComponent* body, const sf::FloatRect& bodyBounds, const sf::FloatRect& intersection, const sf::Vector2f& awayFrom, float share)
+	{
+		auto* transform = body->GetGameObject()->GetComponent<TransformComponent>();
+		if (transform == nullptr || share == 0.f)
+		{
+			return;
+		}
+
+		const sf::Vector2f center = CenterOf(bodyBounds);
+			const float offsetX = center.x - awayFrom.x;
+			const float offsetY = center.y - awayFrom.y;
+
+			if (intersection.size.x <= intersection.size.y)
+			{
+				const float sign = offsetX < 0.f ? -1.f : 1.f;
+				transform->MoveBy({ sign * intersection.size.x * share, 0.f });
+			}
+			else
+			{
+				const float sign = offsetY < 0.f ? -1.f : 1.f;
+				transform->MoveBy({ 0.f, sign * intersection.size.y * share });
+			}
+
+			body->Update(0.f);
+		}
+	}
+
+	PhysicsSystem::PhysicsSystem()
+	{
+		physicsAlive = true;
+	}
+
+	PhysicsSystem::~PhysicsSystem()
+	{
+		physicsAlive = false;
+		colliders.clear();
+		triggersEnteredPair.clear();
+	}
+
 	PhysicsSystem* PhysicsSystem::Instance()
 	{
 		static PhysicsSystem physicsSystem;
@@ -14,84 +78,117 @@ namespace Engine
 		return fixedDeltaTime;
 	}
 
+	bool PhysicsSystem::IsAlive()
+	{
+		return physicsAlive;
+	}
+
 	void PhysicsSystem::Update()
 	{
+		if (!physicsAlive)
+		{
+			return;
+		}
+
+		for (ColliderComponent* collider : colliders)
+		{
+			if (collider != nullptr)
+			{
+				collider->Update(0.f);
+			}
+		}
+
 		for (size_t i = 0; i < colliders.size(); i++)
 		{
-			auto body = colliders[i]->GetGameObject()->GetComponent<RigidbodyComponent>();
-			if (body->GetKinematic())
+			ColliderComponent* first = colliders[i];
+			if (first == nullptr)
 			{
 				continue;
 			}
 
-			for (size_t j = 0; j < colliders.size(); j++)
+			for (size_t j = i + 1; j < colliders.size(); j++)
 			{
-				if (j == i)
+				ColliderComponent* second = colliders[j];
+				if (second == nullptr || !CanInteract(first, second))
 				{
 					continue;
 				}
 
-				const auto intersection = colliders[i]->bounds.findIntersection(colliders[j]->bounds);
-				if (intersection)
+				const auto intersection = first->bounds.findIntersection(second->bounds);
+				if (!intersection)
 				{
-					if (colliders[i]->isTrigger != colliders[j]->isTrigger)
-					{
-						if (triggersEnteredPair.find(colliders[i]) == triggersEnteredPair.end() && triggersEnteredPair.find(colliders[j]) == triggersEnteredPair.end())
-						{
-							Trigger trigger(colliders[i], colliders[j]);
-							colliders[i]->OnTriggerEnter(trigger);
-							colliders[j]->OnTriggerEnter(trigger);
-
-							triggersEnteredPair.emplace(colliders[i], colliders[j]);
-						}
-					}
-					else if (!colliders[i]->isTrigger)
-					{
-						float intersectionWidth = intersection->size.x;
-						float intersectionHeight = intersection->size.y;
-						Vector2Df intersectionPosition = { intersection->position.x - 0.5f * intersectionWidth, intersection->position.y - 0.5f * intersectionHeight };
-
-						Vector2Df aPosition = { colliders[i]->bounds.position.x, colliders[i]->bounds.position.y };
-						auto aTransform = colliders[i]->GetGameObject()->GetComponent<TransformComponent>();
-
-						if (intersectionWidth > intersectionHeight)
-						{
-							if (intersectionPosition.y > aPosition.y)
-							{
-								aTransform->MoveBy({ 0, -intersectionHeight });
-								std::cout << "Top collision" << std::endl;
-							}
-							else
-							{
-								aTransform->MoveBy({ 0, intersectionHeight });
-								std::cout << "Down collision" << std::endl;
-							}
-						}
-						else
-						{
-							if (intersectionPosition.x > aPosition.x)
-							{
-								aTransform->MoveBy({ -intersectionWidth, 0.f });
-								std::cout << "Right collision" << std::endl;
-							}
-							else
-							{
-								aTransform->MoveBy({ intersectionWidth, 0.f });
-								std::cout << "Left collision" << std::endl;
-							}
-						}
-
-						Collision collision(colliders[i], colliders[j], *intersection);
-						colliders[i]->OnCollision(collision);
-						colliders[j]->OnCollision(collision);
-					}
+					continue;
 				}
+
+				if (first->isTrigger != second->isTrigger)
+				{
+					bool alreadyEntered = false;
+					for (const auto& triggeredPair : triggersEnteredPair)
+					{
+						const bool samePair = (triggeredPair.first == first && triggeredPair.second == second)
+							|| (triggeredPair.first == second && triggeredPair.second == first);
+						if (samePair)
+						{
+							alreadyEntered = true;
+							break;
+						}
+					}
+
+					if (!alreadyEntered)
+					{
+						Trigger trigger(first, second);
+						first->OnTriggerEnter(trigger);
+						second->OnTriggerEnter(trigger);
+						triggersEnteredPair.emplace(first, second);
+					}
+					continue;
+				}
+
+				if (first->isTrigger)
+				{
+					continue;
+				}
+
+				const bool firstKinematic = IsKinematic(first);
+				const bool secondKinematic = IsKinematic(second);
+				if (firstKinematic && secondKinematic)
+				{
+					continue;
+				}
+
+				const sf::Vector2f firstCenter = CenterOf(first->bounds);
+				const sf::Vector2f secondCenter = CenterOf(second->bounds);
+				if (firstKinematic)
+				{
+					PushOut(second, second->bounds, *intersection, firstCenter, 1.f);
+				}
+				else if (secondKinematic)
+				{
+					PushOut(first, first->bounds, *intersection, secondCenter, 1.f);
+				}
+				else
+				{
+					const sf::FloatRect firstBounds = first->bounds;
+					const sf::FloatRect secondBounds = second->bounds;
+					PushOut(first, firstBounds, *intersection, secondCenter, 0.5f);
+					PushOut(second, secondBounds, *intersection, firstCenter, 0.5f);
+				}
+
+				Collision collision(first, second, *intersection);
+				first->OnCollision(collision);
+				second->OnCollision(collision);
 			}
 		}
 
 		for (auto triggeredPair = triggersEnteredPair.cbegin(), nextTriggeredPair = triggeredPair; triggeredPair != triggersEnteredPair.cend(); triggeredPair = nextTriggeredPair)
 		{
 			++nextTriggeredPair;
+			if (triggeredPair->first == nullptr || triggeredPair->second == nullptr)
+			{
+				triggersEnteredPair.erase(triggeredPair);
+				continue;
+			}
+
 			if (!triggeredPair->first->bounds.findIntersection(triggeredPair->second->bounds))
 			{
 				Trigger trigger(triggeredPair->first, triggeredPair->second);
@@ -105,13 +202,33 @@ namespace Engine
 
 	void PhysicsSystem::Subscribe(ColliderComponent* collider)
 	{
-		std::cout << "Subscribe " << collider << std::endl;
+		if (!physicsAlive || collider == nullptr)
+		{
+			return;
+		}
+
 		colliders.push_back(collider);
 	}
+
 	void PhysicsSystem::Unsubscribe(ColliderComponent* collider)
 	{
-		std::cout << "Unsubscribe " << collider << std::endl;
+		if (!physicsAlive)
+		{
+			return;
+		}
 
-		colliders.erase(std::remove_if(colliders.begin(), colliders.end(), [collider](ColliderComponent* obj) { return obj == collider; }), colliders.end());
+		colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
+
+		for (auto triggeredPair = triggersEnteredPair.begin(); triggeredPair != triggersEnteredPair.end();)
+		{
+			if (triggeredPair->first == collider || triggeredPair->second == collider)
+			{
+				triggeredPair = triggersEnteredPair.erase(triggeredPair);
+			}
+			else
+			{
+				++triggeredPair;
+			}
+		}
 	}
 }

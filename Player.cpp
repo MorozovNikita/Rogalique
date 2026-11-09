@@ -36,6 +36,8 @@ namespace Roguelike
 		rigidbody->SetKinematic(false);
 
 		auto collider = gameObject->AddComponent<Engine::SpriteColliderComponent>();
+		collider->SetCollisionLayer(Engine::CollisionLayer::Actor);
+		collider->SetCollisionMask(Engine::CollisionLayer::World);
 
 		auto animator = gameObject->AddComponent<Engine::SpriteMovementAnimationComponent>();
 		animator->Initialize("player", 6.f);

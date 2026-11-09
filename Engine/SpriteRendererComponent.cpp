@@ -22,19 +22,29 @@ namespace Engine
 		}
 	}
 
+	void SpriteRendererComponent::ApplyTransform()
+	{
+		if (sprite == nullptr || transform == nullptr)
+		{
+			return;
+		}
+
+		sprite->setPosition(Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
+		sprite->setRotation(sf::degrees(transform->GetWorldRotation()));
+
+		auto transformScale = Convert<sf::Vector2f, Vector2Df>(transform->GetWorldScale());
+		sprite->setScale({ scale.x * transformScale.x, scale.y * transformScale.y });
+	}
+
 	void SpriteRendererComponent::Update(float deltaTime)
 	{
-
+		ApplyTransform();
 	}
 	void SpriteRendererComponent::Render()
 	{
 		if (sprite != nullptr)
 		{
-			sprite->setPosition(Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
-			sprite->setRotation(sf::degrees(transform->GetWorldRotation()));
-
-			auto transformScale = Convert<sf::Vector2f, Vector2Df>(transform->GetWorldScale());
-			sprite->setScale({ scale.x * transformScale.x, scale.y * transformScale.y });
+			ApplyTransform();
 			RenderSystem::Instance()->Render(*sprite);
 		}
 	}

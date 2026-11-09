@@ -5,7 +5,6 @@
 #include "Vector.h"
 
 #include <map>
-#include <iostream>
 
 namespace Engine
 {
@@ -17,11 +16,12 @@ namespace Engine
 		void Update();
 
 		float GetFixedDeltaTime() const;
+		static bool IsAlive();
 		void Subscribe(ColliderComponent* collider);
 		void Unsubscribe(ColliderComponent* collider);
 	private:
-		PhysicsSystem() {}
-		~PhysicsSystem() {}
+		PhysicsSystem();
+		~PhysicsSystem();
 
 		PhysicsSystem(PhysicsSystem const&) = delete;
 		PhysicsSystem& operator= (PhysicsSystem const&) = delete;

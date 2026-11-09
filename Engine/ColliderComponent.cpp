@@ -13,6 +13,26 @@ namespace Engine
 		isTrigger = newIsTrigger;
 	}
 
+	void ColliderComponent::SetCollisionLayer(unsigned int newLayer)
+	{
+		layer = newLayer;
+	}
+
+	void ColliderComponent::SetCollisionMask(unsigned int newMask)
+	{
+		mask = newMask;
+	}
+
+	unsigned int ColliderComponent::GetCollisionLayer() const
+	{
+		return layer;
+	}
+
+	unsigned int ColliderComponent::GetCollisionMask() const
+	{
+		return mask;
+	}
+
 	void ColliderComponent::SubscribeCollision(std::function<void(Collision)> onCollisionAction)
 	{
 		onCollisionActions.push_back(onCollisionAction);

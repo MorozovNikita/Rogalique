@@ -17,12 +17,25 @@ namespace Engine
 		}
 	}
 
+	GameWorld::~GameWorld()
+	{
+		Clear();
+	}
+
 	void GameWorld::FixedUpdate(float deltaTime)
 	{
-		fixedCounter += deltaTime;
-		if (fixedCounter > PhysicsSystem::Instance()->GetFixedDeltaTime())
+		const float fixedDeltaTime = PhysicsSystem::Instance()->GetFixedDeltaTime();
+		const float maxFrameTime = fixedDeltaTime * 5.f;
+		if (deltaTime > maxFrameTime)
 		{
-			fixedCounter -= PhysicsSystem::Instance()->GetFixedDeltaTime();
+			deltaTime = maxFrameTime;
+		}
+
+		fixedCounter += deltaTime;
+		while (fixedCounter >= fixedDeltaTime)
+		{
+			fixedCounter -= fixedDeltaTime;
+			Update(fixedDeltaTime);
 			PhysicsSystem::Instance()->Update();
 		}
 	}
@@ -37,9 +50,17 @@ namespace Engine
 
 	void GameWorld::LateUpdate()
 	{
-		for (size_t i = markedToDestroyGameObjects.size(); i > 0; i--)
+		std::vector<GameObject*> pending = std::move(markedToDestroyGameObjects);
+		markedToDestroyGameObjects.clear();
+
+		for (GameObject* gameObject : pending)
 		{
-			DestroyGameObjectImmediate(markedToDestroyGameObjects[i - 1]);
+			if (std::find(gameObjects.begin(), gameObjects.end(), gameObject) == gameObjects.end())
+			{
+				continue;
+			}
+
+			DestroyGameObjectImmediate(gameObject);
 		}
 	}
 
@@ -91,19 +112,28 @@ namespace Engine
 
 	void GameWorld::Clear()
 	{
-		for (size_t i = gameObjects.size(); i > 0; i--)
+		std::vector<GameObject*> roots;
+		for (GameObject* gameObject : gameObjects)
 		{
-			if (gameObjects[i - 1] == nullptr)
+			if (gameObject == nullptr)
 			{
 				continue;
 			}
 
-			if (gameObjects[i - 1]->GetComponent<TransformComponent>()->GetParent() == nullptr)
+			auto* transform = gameObject->GetComponent<TransformComponent>();
+			if (transform != nullptr && transform->GetParent() == nullptr)
 			{
-				DestroyGameObjectImmediate(gameObjects[i - 1]);
+				roots.push_back(gameObject);
 			}
 		}
 
+		for (GameObject* root : roots)
+		{
+			DestroyGameObjectImmediate(root);
+		}
+
+		gameObjects.clear();
+		markedToDestroyGameObjects.clear();
 		fixedCounter = 0.f;
 	}
 
@@ -124,20 +154,39 @@ namespace Engine
 
 	void GameWorld::DestroyGameObjectImmediate(GameObject* gameObject)
 	{
-		auto parent = gameObject->GetComponent<TransformComponent>()->GetParent();
-		if (parent != nullptr)
+		if (gameObject == nullptr || std::find(gameObjects.begin(), gameObjects.end(), gameObject) == gameObjects.end())
 		{
-			parent->GetGameObject()->RemoveChild(gameObject);
+			return;
 		}
 
-		for (auto transform : gameObject->GetComponentsInChildren<TransformComponent>())
+		auto* transform = gameObject->GetComponent<TransformComponent>();
+		if (transform != nullptr)
 		{
-			GameObject* gameObjectToDelete = transform->GetGameObject();
+			auto* parent = transform->GetParent();
+			if (parent != nullptr && parent->GetGameObject() != nullptr)
+			{
+				parent->GetGameObject()->RemoveChild(gameObject);
+			}
+		}
 
-			gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), [gameObjectToDelete](GameObject* obj) { return obj == gameObjectToDelete; }), gameObjects.end());
-			markedToDestroyGameObjects.erase(std::remove_if(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), [gameObjectToDelete](GameObject* obj) { return obj == gameObjectToDelete; }), markedToDestroyGameObjects.end());
+		std::vector<GameObject*> toDelete;
+		for (auto* childTransform : gameObject->GetComponentsInChildren<TransformComponent>())
+		{
+			if (childTransform != nullptr && childTransform->GetGameObject() != nullptr)
+			{
+				toDelete.push_back(childTransform->GetGameObject());
+			}
+		}
 
-			delete gameObjectToDelete;
+		for (GameObject* gameObjectToDelete : toDelete)
+		{
+			gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToDelete), gameObjects.end());
+			markedToDestroyGameObjects.erase(std::remove(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), gameObjectToDelete), markedToDestroyGameObjects.end());
+		}
+
+		for (auto gameObjectToDelete = toDelete.rbegin(); gameObjectToDelete != toDelete.rend(); ++gameObjectToDelete)
+		{
+			delete *gameObjectToDelete;
 		}
 	}
 }

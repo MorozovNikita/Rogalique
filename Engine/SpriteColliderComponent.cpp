@@ -5,28 +5,32 @@ namespace Engine
 {
 	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject)
 	{
-		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
-		if (spriteRenderer == nullptr)
+		renderer = gameObject->GetComponent<SpriteRendererComponent>();
+		if (renderer == nullptr)
 		{
 			std::cout << "SpriteRenderer required to SpriteCollider." << std::endl;
-			gameObject->RemoveComponent(this);
 			return;
 		}
 
-		sprite = gameObject->GetComponent<SpriteRendererComponent>()->GetSprite();
+		sprite = renderer->GetSprite();
 		PhysicsSystem::Instance()->Subscribe(this);
 	}
 	SpriteColliderComponent::~SpriteColliderComponent()
 	{
-		if (&bounds != nullptr)
+		if (PhysicsSystem::IsAlive())
 		{
-			std::destroy_at(&bounds);
+			PhysicsSystem::Instance()->Unsubscribe(this);
 		}
-		PhysicsSystem::Instance()->Unsubscribe(this);
 	}
 
 	void SpriteColliderComponent::Update(float deltaTime)
 	{
+		if (renderer == nullptr || sprite == nullptr)
+		{
+			return;
+		}
+
+		renderer->ApplyTransform();
 		bounds = sprite->getGlobalBounds();
 	}
 	void SpriteColliderComponent::Render()

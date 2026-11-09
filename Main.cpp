@@ -10,8 +10,8 @@ using namespace Roguelike;
 
 int main()
 {
-	auto* window = new sf::RenderWindow(sf::VideoMode({ 1280, 720 }), "Roguelike");
-	RenderSystem::Instance()->SetMainWindow(window);
+	sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "Roguelike");
+	RenderSystem::Instance()->SetMainWindow(&window);
 
 	ResourceSystem::Instance()->LoadTexture("ball", "Resources/textures/ball.png");
 	ResourceSystem::Instance()->LoadTexture("monster", "Resources/textures/Monster.png");
@@ -25,6 +25,10 @@ int main()
 	developerLevel->Start();
 
 	::Engine::Engine::Instance()->Run();
+
+	developerLevel->Stop();
+	ResourceSystem::Instance()->Clear();
+	RenderSystem::Instance()->SetMainWindow(nullptr);
 
 	return 0;
 }

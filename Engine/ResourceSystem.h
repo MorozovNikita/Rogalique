@@ -50,7 +50,7 @@ namespace Engine
 		float effectsVolume = 100.f;
 
 		ResourceSystem() {}
-		~ResourceSystem() {}
+		~ResourceSystem();
 
 		ResourceSystem(ResourceSystem const&) = delete;
 		ResourceSystem& operator= (ResourceSystem const&) = delete;

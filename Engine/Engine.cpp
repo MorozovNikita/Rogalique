@@ -21,34 +21,37 @@ namespace Engine
 
 	void Engine::Run()
 	{
+		sf::RenderWindow& window = RenderSystem::Instance()->GetMainWindow();
+		window.setVerticalSyncEnabled(true);
+		window.setFramerateLimit(60);
+
 		sf::Clock gameClock;
 
-		while (RenderSystem::Instance()->GetMainWindow().isOpen())
+		while (window.isOpen())
 		{
 			sf::Time dt = gameClock.restart();
 			float deltaTime = dt.asSeconds();
 
-			while (const std::optional<sf::Event> event = RenderSystem::Instance()->GetMainWindow().pollEvent())
+			while (const std::optional<sf::Event> event = window.pollEvent())
 			{
 				if (event->is<sf::Event::Closed>())
 				{
-					RenderSystem::Instance()->GetMainWindow().close();
+					window.close();
 				}
 			}
 
-			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
+			if (!window.isOpen())
 			{
 				break;
 			}
 
-			RenderSystem::Instance()->GetMainWindow().clear();
+			window.clear();
 
-			GameWorld::Instance()->Update(deltaTime);
 			GameWorld::Instance()->FixedUpdate(deltaTime);
 			GameWorld::Instance()->Render();
 			GameWorld::Instance()->LateUpdate();
 
-			RenderSystem::Instance()->GetMainWindow().display();
+			window.display();
 		}
 	}
 }
