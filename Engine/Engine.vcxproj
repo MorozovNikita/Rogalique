@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AttackComponent.h" />
+    <ClInclude Include="ConeAreaComponent.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ChaseComponent.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SpriteColliderComponent.h" />
     <ClInclude Include="SpriteDirectionComponent.h" />
+    <ClInclude Include="SpriteClipAnimatorComponent.h" />
     <ClInclude Include="SpriteMovementAnimationComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
     <ClInclude Include="TransformComponent.h" />
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttackComponent.cpp" />
+    <ClCompile Include="ConeAreaComponent.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />
@@ -211,6 +214,7 @@
     <ClCompile Include="RigidbodyComponent.cpp" />
     <ClCompile Include="SpriteColliderComponent.cpp" />
     <ClCompile Include="SpriteDirectionComponent.cpp" />
+    <ClCompile Include="SpriteClipAnimatorComponent.cpp" />
     <ClCompile Include="SpriteMovementAnimationComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />

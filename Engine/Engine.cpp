@@ -28,6 +28,7 @@ namespace Engine
 		window.setFramerateLimit(60);
 
 		sf::Clock gameClock;
+		LOG_INFO("Engine started");
 
 		try
 		{

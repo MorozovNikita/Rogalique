@@ -22,10 +22,20 @@ int main()
 		RenderSystem::Instance()->SetMainWindow(&window);
 
 		ResourceSystem::Instance()->LoadTexture("ball", "Resources/textures/ball.png");
-		ResourceSystem::Instance()->LoadTexture("monster", "Resources/textures/Monster.png");
 
 		ResourceSystem::Instance()->LoadTextureMap("level_floors", "Resources/textures/Floor.png", { 16, 16 }, 49, false);
 		ResourceSystem::Instance()->LoadTextureMap("level_walls", "Resources/textures/Wall.png", { 16, 16 }, 48, false);
+
+		const std::string vampiresFolder = "Resources/textures/Vampires/";
+		for (int index = 1; index <= 3; ++index)
+		{
+			const std::string folderName = "Vampires" + std::to_string(index);
+			const std::string key = "vampire" + std::to_string(index);
+
+			ResourceSystem::Instance()->LoadTextureMap(key + "_idle", vampiresFolder + folderName + '/' + folderName + "_Idle_without_shadow.png", {64, 64}, 16, false);
+			ResourceSystem::Instance()->LoadTextureMap(key + "_run", vampiresFolder + folderName + '/' + folderName + "_Run_without_shadow.png", { 64, 64 }, 32, false);
+			ResourceSystem::Instance()->LoadTextureMap(key + "_attack", vampiresFolder + folderName + '/' + folderName + "_Attack_without_shadow.png", { 64, 64 }, 48, false);
+		}
 
 		ResourceSystem::Instance()->LoadSoundBuffer("music", "Resources/music/dev level music.mp3");
 

@@ -151,10 +151,15 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterFactory.cpp" />
+    <ClCompile Include="LocomotionAnimator.cpp" />
+    <ClCompile Include="MeleeAttackComponent.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="Engine\AttackComponent.cpp" />
+    <ClCompile Include="Engine\ConeAreaComponent.cpp" />
     <ClCompile Include="Engine\AudioComponent.cpp" />
     <ClCompile Include="Engine\CameraComponent.cpp" />
     <ClCompile Include="Engine\ChaseComponent.cpp" />
@@ -176,6 +181,7 @@
     <ClCompile Include="Engine\RigidbodyComponent.cpp" />
     <ClCompile Include="Engine\SpriteColliderComponent.cpp" />
     <ClCompile Include="Engine\SpriteDirectionComponent.cpp" />
+    <ClCompile Include="Engine\SpriteClipAnimatorComponent.cpp" />
     <ClCompile Include="Engine\SpriteMovementAnimationComponent.cpp" />
     <ClCompile Include="Engine\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\TransformComponent.cpp" />
@@ -193,6 +199,9 @@
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="LocomotionAnimator.h" />
+    <ClInclude Include="MeleeAttackComponent.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHolder.h" />
@@ -224,6 +233,8 @@
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\SpriteColliderComponent.h" />
     <ClInclude Include="Engine\SpriteDirectionComponent.h" />
+    <ClInclude Include="Engine\SpriteClipAnimatorComponent.h" />
+    <ClInclude Include="Engine\ConeAreaComponent.h" />
     <ClInclude Include="Engine\SpriteMovementAnimationComponent.h" />
     <ClInclude Include="Engine\SpriteRendererComponent.h" />
     <ClInclude Include="Engine\TransformComponent.h" />
