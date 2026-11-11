@@ -77,6 +77,7 @@ namespace Roguelike
 		MonsterCatalog monstersFactory;
 		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width / 3) * tile, (height / 3) * tile), chaseSettings));
 		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width * 2 / 3) * tile, (height / 3) * tile), chaseSettings));
+		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width / 2) * tile, (height / 5) * tile), chaseSettings));
 
 		music = std::make_unique<Music>("music");
 		LOG_INFO("Developer level started");

@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "PlayerAttackComponent.h"
+
 #include <AttackComponent.h>
 #include <ConeAreaComponent.h>
 #include <ResourceSystem.h>
@@ -52,6 +54,7 @@ namespace Roguelike
 		auto cone = gameObject->AddComponent<Engine::ConeAreaComponent>();
 		cone->SetRange(110.f);
 		cone->SetAngle(70.f);
+		gameObject->AddComponent<PlayerAttackComponent>();
 	}
 
 	Engine::GameObject* Player::GetGameObject()

@@ -154,6 +154,7 @@
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="LocomotionAnimator.cpp" />
     <ClCompile Include="MeleeAttackComponent.cpp" />
+    <ClCompile Include="PlayerAttackComponent.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="LocomotionAnimator.h" />
     <ClInclude Include="MeleeAttackComponent.h" />
+    <ClInclude Include="PlayerAttackComponent.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHolder.h" />
