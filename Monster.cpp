@@ -1,7 +1,6 @@
 #include "Monster.h"
 
 #include "LocomotionAnimator.h"
-#include "MeleeAttackComponent.h"
 
 #include <AttackComponent.h>
 #include <ChaseComponent.h>
@@ -42,14 +41,14 @@ namespace Roguelike
 		collider->SetBoundsScale(0.4f, 0.48f);
 
 		gameObject->AddComponent<Engine::StatsComponent>(40.f, 0.f);
-		gameObject->AddComponent<Engine::AttackComponent>(60.f);
 
 		auto cone = gameObject->AddComponent<Engine::ConeAreaComponent>();
 		cone->SetRange(110.f);
 		cone->SetAngle(70.f);
 
 		gameObject->AddComponent<LocomotionAnimator>();
-		gameObject->AddComponent<MeleeAttackComponent>("attack");
+		auto attack = gameObject->AddComponent<Engine::AttackComponent>(60.f, Engine::AttackTrigger::Automatic);
+		attack->SetAttackClip("attack");
 	}
 
 	Engine::GameObject* Monster::GetGameObject()
