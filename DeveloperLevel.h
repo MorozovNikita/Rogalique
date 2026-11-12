@@ -21,9 +21,9 @@ namespace Roguelike
 		void Restart() override;
 		void Stop() override;
 	private:
-		std::shared_ptr<Player>  player;
-		std::shared_ptr<Monster> monster;
-		std::unique_ptr<Music>   music;
+		std::shared_ptr<Player> player;
+		std::vector<std::unique_ptr<Monster>> monsters;
+		std::unique_ptr<Music> music;
 
 		std::vector<std::unique_ptr<Wall>> walls;
 		std::vector<std::unique_ptr<Floor>> floors;

@@ -1,5 +1,7 @@
 #include "Music.h"
 
+#include <cassert>
+
 namespace Roguelike
 {
 
@@ -9,6 +11,7 @@ namespace Roguelike
 		auto music = gameObject->AddComponent<Engine::AudioComponent>();
 
 		const auto* buffer = Engine::ResourceSystem::Instance()->GetSoundBuffer(soundName);
+		assert(buffer != nullptr && "Music buffer was not loaded");
 		if (buffer == nullptr)
 		{
 			return;

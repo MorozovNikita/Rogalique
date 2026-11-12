@@ -14,10 +14,14 @@ namespace Engine
 		SpriteColliderComponent(GameObject* gameObject);
 		~SpriteColliderComponent();
 
+		void SetBoundsScale(float scaleX, float scaleY);
+
 		void Update(float deltaTime) override;
 		void Render() override;
 	private:
 		SpriteRendererComponent* renderer = nullptr;
 		const sf::Sprite* sprite = nullptr;
+		float boundsScaleX = 1.f;
+		float boundsScaleY = 1.f;
 	};
 }

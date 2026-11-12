@@ -1,5 +1,8 @@
 #include "Floor.h"
 
+#include <stdexcept>
+#include <string>
+
 namespace Roguelike
 {
 
@@ -9,8 +12,14 @@ namespace Roguelike
 		auto transform = gameObject->GetComponent<Engine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
+		const auto* texture = Engine::ResourceSystem::Instance()->GetTextureMapElementShared("level_floors", textureMapIndex);
+		if (texture == nullptr)
+		{
+			throw std::runtime_error("Floor texture is missing at index " + std::to_string(textureMapIndex));
+		}
+
 		auto renderer = gameObject->AddComponent<Engine::SpriteRendererComponent>();
-		renderer->SetTexture(*Engine::ResourceSystem::Instance()->GetTextureMapElementShared("level_floors", textureMapIndex));
+		renderer->SetTexture(*texture);
 		renderer->SetPixelSize(128, 128);
 	}
 

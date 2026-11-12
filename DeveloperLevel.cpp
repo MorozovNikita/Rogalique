@@ -1,5 +1,8 @@
 #include "DeveloperLevel.h"
 
+#include "Logger.h"
+#include "MonsterFactory.h"
+
 #include <ChaseComponent.h>
 
 #include <set>
@@ -70,9 +73,14 @@ namespace Roguelike
 		chaseSettings.walkable = walkable;
 		chaseSettings.detectionRadius = detectionRadius;
 		chaseSettings.stopDistance = stopDistance;
-		monster = std::make_shared<Monster>(Vector2Df((width / 3) * tile, (height / 3) * tile), chaseSettings);
+
+		MonsterCatalog monstersFactory;
+		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width / 3) * tile, (height / 3) * tile), chaseSettings));
+		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width * 2 / 3) * tile, (height / 3) * tile), chaseSettings));
+		monsters.push_back(monstersFactory.Create(MonsterId::Vampire, Vector2Df((width / 2) * tile, (height / 5) * tile), chaseSettings));
 
 		music = std::make_unique<Music>("music");
+		LOG_INFO("Developer level started");
 	}
 	void DeveloperLevel::Restart()
 	{
@@ -82,7 +90,7 @@ namespace Roguelike
 	void DeveloperLevel::Stop()
 	{
 		player.reset();
-		monster.reset();
+		monsters.clear();
 		music.reset();
 		walls.clear();
 		floors.clear();

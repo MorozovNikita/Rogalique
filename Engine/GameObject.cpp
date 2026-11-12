@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "GameObject.h"
+#include "Logger.h"
+
+#include <sstream>
 
 namespace Engine
 {
@@ -31,11 +34,13 @@ namespace Engine
 
 	void GameObject::Print(int depth) const
 	{
-		std::cout << std::string(depth * 2, ' ') << GetName() << std::endl;
+		std::ostringstream stream;
+		stream << std::string(depth * 2, ' ') << GetName();
 		for (auto& component : components)
 		{
-			std::cout << std::string(depth * 2, ' ') << "::" << component << std::endl;
+			stream << " ::" << component;
 		}
+		LOG_INFO(stream.str());
 
 		for (GameObject* child : children)
 		{

@@ -28,6 +28,7 @@ namespace Engine
 		ChaseComponent(GameObject* gameObject);
 
 		void Initialize(const ChaseSettings& settings);
+		GameObject* GetTarget() const;
 
 		void Update(float deltaTime) override;
 		void Render() override;
