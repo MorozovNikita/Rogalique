@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "SpriteColliderComponent.h"
 
+#include <stdexcept>
+
 namespace Engine
 {
 	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject)
@@ -8,8 +10,7 @@ namespace Engine
 		renderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (renderer == nullptr)
 		{
-			std::cout << "SpriteRenderer required to SpriteCollider." << std::endl;
-			return;
+			throw std::logic_error("SpriteRenderer required to SpriteCollider");
 		}
 
 		sprite = renderer->GetSprite();
@@ -32,6 +33,23 @@ namespace Engine
 
 		renderer->ApplyTransform();
 		bounds = sprite->getGlobalBounds();
+
+		const float width = bounds.size.x * boundsScaleX;
+		const float height = bounds.size.y * boundsScaleY;
+		bounds.position.x += (bounds.size.x - width) * 0.5f;
+		bounds.position.y += (bounds.size.y - height) * 0.5f;
+		bounds.size = { width, height };
+	}
+
+	void SpriteColliderComponent::SetBoundsScale(float scaleX, float scaleY)
+	{
+		if (scaleX <= 0.f || scaleY <= 0.f)
+		{
+			throw std::invalid_argument("Sprite collider scale must be positive");
+		}
+
+		boundsScaleX = scaleX;
+		boundsScaleY = scaleY;
 	}
 	void SpriteColliderComponent::Render()
 	{

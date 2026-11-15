@@ -39,11 +39,23 @@
     <ClCompile Include="Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="LocomotionAnimator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AttackComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ConeAreaComponent.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\AudioComponent.cpp">
       <Filter>Engine</Filter>
@@ -100,6 +112,9 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\SpriteDirectionComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SpriteClipAnimatorComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\SpriteMovementAnimationComponent.cpp">
@@ -165,6 +180,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="LocomotionAnimator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="DeveloperLevel.h">
@@ -240,6 +261,12 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SpriteDirectionComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteClipAnimatorComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ConeAreaComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SpriteMovementAnimationComponent.h">

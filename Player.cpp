@@ -1,10 +1,13 @@
 #include "Player.h"
 
+#include <AttackComponent.h>
+#include <ConeAreaComponent.h>
 #include <ResourceSystem.h>
 #include <SpriteColliderComponent.h>
 #include <MovementComponent.h>
 #include <SpriteDirectionComponent.h>
 #include <SpriteMovementAnimationComponent.h>
+#include <StatsComponent.h>
 
 namespace Roguelike
 {
@@ -41,6 +44,13 @@ namespace Roguelike
 
 		auto animator = gameObject->AddComponent<Engine::SpriteMovementAnimationComponent>();
 		animator->Initialize("player", 6.f);
+
+		auto states = gameObject->AddComponent<Engine::StatsComponent>(100.f, 50.f);
+
+		auto cone = gameObject->AddComponent<Engine::ConeAreaComponent>();
+		cone->SetRange(110.f);
+		cone->SetAngle(70.f);
+		gameObject->AddComponent<Engine::AttackComponent>(3.f, Engine::AttackTrigger::Input);
 	}
 
 	Engine::GameObject* Player::GetGameObject()

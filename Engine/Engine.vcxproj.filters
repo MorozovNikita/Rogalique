@@ -84,6 +84,9 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteClipAnimatorComponent.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
     <ClInclude Include="SpriteMovementAnimationComponent.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -98,6 +101,18 @@
     </ClInclude>
     <ClInclude Include="AudioComponent.h">
       <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsComponent.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackComponent.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ConeAreaComponent.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +176,9 @@
     <ClCompile Include="MovementComponent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteClipAnimatorComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="SpriteMovementAnimationComponent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -174,6 +192,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="AudioComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeAreaComponent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

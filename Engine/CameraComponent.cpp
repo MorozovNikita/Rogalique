@@ -2,6 +2,8 @@
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 
+#include <stdexcept>
+
 namespace Engine
 {
 	CameraComponent::CameraComponent(GameObject* gameObject) : Component(gameObject)
@@ -17,6 +19,15 @@ namespace Engine
 
 	void CameraComponent::Update(float deltaTime)
 	{
+		if (window == nullptr)
+		{
+			throw std::runtime_error("Camera update without a window");
+		}
+		if (transform == nullptr)
+		{
+			throw std::runtime_error("Camera has no transform");
+		}
+
 		auto position = transform->GetWorldPosition();
 		auto rotation = transform->GetWorldRotation();
 
@@ -30,7 +41,7 @@ namespace Engine
 	{
 		if (window == nullptr)
 		{
-			std::cout << "NULL window render." << std::endl;
+			throw std::runtime_error("Camera render without a window");
 		}
 	}
 
@@ -46,10 +57,9 @@ namespace Engine
 	}
 	void CameraComponent::ZoomBy(float newZoom)
 	{
-		if (newZoom <= 0)
+		if (newZoom <= 0.f)
 		{
-			std::cout << "Not allowed zoom lesser or equal than zero." << std::endl;
-			return;
+			throw std::invalid_argument("Zoom must be greater than zero");
 		}
 		view->zoom(newZoom);
 	}

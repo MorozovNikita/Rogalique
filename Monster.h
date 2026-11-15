@@ -1,12 +1,9 @@
 #pragma once
 
-#include "CameraComponent.h"
 #include "GameWorld.h"
-#include "SpriteRendererComponent.h"
-#include "RenderSystem.h"
-#include "InputComponent.h"
-#include "GameObject.h"
 #include "Vector.h"
+
+#include <string>
 
 namespace Engine
 {
@@ -15,11 +12,20 @@ namespace Engine
 
 namespace Roguelike
 {
+	struct MonsterAppearance
+	{
+		std::string id;
+		std::string idle;
+		std::string run;
+		std::string attack;
+	};
+
 	class Monster
 	{
 	public:
-		Monster(const Engine::Vector2Df& position, const Engine::ChaseSettings& chaseSettings);
+		Monster(const Engine::Vector2Df& position, const Engine::ChaseSettings& chaseSettings, const MonsterAppearance& appearance);
 		Engine::GameObject* GetGameObject();
+
 	private:
 		Engine::GameObject* gameObject;
 	};

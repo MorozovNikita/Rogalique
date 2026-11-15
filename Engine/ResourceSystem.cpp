@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ResourceSystem.h"
 
+#include <cassert>
+
 namespace Engine
 {
 	ResourceSystem::~ResourceSystem()
@@ -22,15 +24,16 @@ namespace Engine
 		}
 
 		sf::Texture* newTexture = new sf::Texture();
-		if (newTexture->loadFromFile(sourcePath))
-		{
-			newTexture->setSmooth(isSmooth);
-			textures.emplace(name, newTexture);
-		}
-		else
+		const bool loaded = newTexture->loadFromFile(sourcePath);
+		assert(loaded && "Failed to load texture");
+		if (!loaded)
 		{
 			delete newTexture;
+			return;
 		}
+
+		newTexture->setSmooth(isSmooth);
+		textures.emplace(name, newTexture);
 	}
 
 	const sf::Texture* ResourceSystem::GetTextureShared(const std::string& name) const
@@ -76,7 +79,9 @@ namespace Engine
 		}
 
 		sf::Texture textureMap;
-		if (textureMap.loadFromFile(sourcePath))
+		const bool loaded = textureMap.loadFromFile(sourcePath);
+		assert(loaded && "Failed to load texture map");
+		if (loaded)
 		{
 			std::vector<sf::Texture*> textureMapElements;
 
@@ -98,7 +103,9 @@ namespace Engine
 					}
 
 					sf::Texture* newTextureMapElement = new sf::Texture();
-					if (newTextureMapElement->loadFromFile(sourcePath, false, sf::IntRect({ x, y }, { static_cast<int>(elementPixelSize.x), static_cast<int>(elementPixelSize.y) })))
+					const bool elementLoaded = newTextureMapElement->loadFromFile(sourcePath, false, sf::IntRect({ x, y }, { static_cast<int>(elementPixelSize.x), static_cast<int>(elementPixelSize.y) }));
+					assert(elementLoaded && "Failed to load texture map element");
+					if (elementLoaded)
 					{
 						newTextureMapElement->setSmooth(isSmooth);
 						textureMapElements.push_back(newTextureMapElement);
@@ -180,14 +187,15 @@ namespace Engine
 		}
 
 		sf::SoundBuffer* newBuffer = new sf::SoundBuffer();
-		if (newBuffer->loadFromFile(sourcePath))
-		{
-			soundBuffers.emplace(name, newBuffer);
-		}
-		else
+		const bool loaded = newBuffer->loadFromFile(sourcePath);
+		assert(loaded && "Failed to load sound");
+		if (!loaded)
 		{
 			delete newBuffer;
+			return;
 		}
+
+		soundBuffers.emplace(name, newBuffer);
 	}
 
 	const sf::SoundBuffer* ResourceSystem::GetSoundBuffer(const std::string& name) const
@@ -228,7 +236,9 @@ namespace Engine
 		}
 
 		StopMusic();
-		if (!currentMusic.openFromFile(path))
+		const bool opened = currentMusic.openFromFile(path);
+		assert(opened && "Failed to open music");
+		if (!opened)
 		{
 			return;
 		}

@@ -26,6 +26,11 @@ namespace Engine
 		waypointIndex = 0;
 	}
 
+	GameObject* ChaseComponent::GetTarget() const
+	{
+		return target;
+	}
+
 	void ChaseComponent::Update(float deltaTime)
 	{
 		if (target == nullptr || cellSize == 0.f)

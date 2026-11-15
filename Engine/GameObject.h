@@ -3,7 +3,7 @@
 #include "TransformComponent.h"
 
 #include <algorithm>
-#include <iostream>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -31,7 +31,7 @@ namespace Engine
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
-				std::cout << "T must be derived from Component." << std::endl;
+				static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component.");
 				return nullptr;
 			}
 
@@ -39,8 +39,7 @@ namespace Engine
 			{
 				if (GetComponent<TransformComponent>() != nullptr)
 				{
-					std::cout << "Can't add Transform, because it will break the engine loop." << std::endl;
-					return nullptr;
+					throw std::logic_error("Can't add Transform, because it will break the engine loop.");
 				}
 			}
 
@@ -50,11 +49,38 @@ namespace Engine
 			return newComponent;
 		}
 
+		template <typename T, typename... Args>
+		T* AddComponent(Args&&... args)
+		{
+			if constexpr (!std::is_base_of<Component, T>::value)
+			{
+				static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component.");
+				return nullptr;
+			}
+
+			if constexpr (std::is_same<T, TransformComponent>::value)
+			{
+				if (GetComponent<TransformComponent>() != nullptr)
+				{
+					throw std::logic_error("Can't add Transform, because it will break the engine loop.");
+				}
+			}
+
+			T* newComponent = new T(this, std::forward<Args>(args)...);
+			components.push_back(newComponent);
+
+			return newComponent;
+		}
+
 		void RemoveComponent(Component* component)
 		{
+			if (component == nullptr)
+			{
+				throw std::invalid_argument("RemoveComponent called with null");
+			}
+
 			components.erase(std::remove_if(components.begin(), components.end(), [component](Component* obj) { return obj == component; }), components.end());
 			delete component;
-			std::cout << "Deleted component";
 		}
 
 		template <typename T>
