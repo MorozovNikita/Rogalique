@@ -20,6 +20,7 @@ namespace Roguelike
 		void Start() override;
 		void Restart() override;
 		void Stop() override;
+
 	private:
 		std::shared_ptr<Player> player;
 		std::vector<std::unique_ptr<Monster>> monsters;

@@ -150,6 +150,7 @@
     <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="LocomotionAnimator.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="LocomotionAnimator.h" />

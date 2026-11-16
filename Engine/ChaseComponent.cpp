@@ -78,33 +78,65 @@ namespace Engine
 			waypointIndex = 0;
 		}
 
-		while (waypointIndex < path.size() && path[waypointIndex] == selfCell)
+		if (path.empty() || GridPathLength(path, cellSize) > detectionRadius)
 		{
+			hasTargetCell = false;
+			path.clear();
+			Stop();
+			return;
+		}
+
+		const float slack = cellSize * 0.2f;
+		while (waypointIndex < path.size())
+		{
+			const Vector2Df center = GridCellCenter(path[waypointIndex], cellSize);
+			if (std::abs(center.x - selfPosition.x) > slack || std::abs(center.y - selfPosition.y) > slack)
+			{
+				break;
+			}
 			++waypointIndex;
 		}
 
 		horizontalAxis = 0.f;
 		verticalAxis = 0.f;
-		if (waypointIndex < path.size())
+		if (waypointIndex >= path.size())
 		{
-			const Cell& next = path[waypointIndex];
-			if (next.first > selfCell.first)
+			if (distanceSquared <= stopDistance * stopDistance)
 			{
-				horizontalAxis = 1.f;
-			}
-			else if (next.first < selfCell.first)
-			{
-				horizontalAxis = -1.f;
+				return;
 			}
 
-			if (next.second > selfCell.second)
+			const float distance = std::sqrt(distanceSquared);
+			horizontalAxis = offsetX / distance;
+			verticalAxis = offsetY / distance;
+			return;
+		}
+
+		const Vector2Df center = GridCellCenter(path[waypointIndex], cellSize);
+		const float deltaX = center.x - selfPosition.x;
+		const float deltaY = center.y - selfPosition.y;
+		const bool offX = std::abs(deltaX) > slack;
+		const bool offY = std::abs(deltaY) > slack;
+		if (offX && offY)
+		{
+			if (std::abs(deltaX) <= std::abs(deltaY))
 			{
-				verticalAxis = 1.f;
+				horizontalAxis = deltaX > 0.f ? 1.f : -1.f;
 			}
-			else if (next.second < selfCell.second)
+			else
 			{
-				verticalAxis = -1.f;
+				verticalAxis = deltaY > 0.f ? 1.f : -1.f;
 			}
+			return;
+		}
+
+		if (offX)
+		{
+			horizontalAxis = deltaX > 0.f ? 1.f : -1.f;
+		}
+		if (offY)
+		{
+			verticalAxis = deltaY > 0.f ? 1.f : -1.f;
 		}
 	}
 
