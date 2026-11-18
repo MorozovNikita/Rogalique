@@ -5,23 +5,28 @@
 namespace Engine
 {
 
-	class RenderSystem
-	{
-	public:
-		static RenderSystem* Instance();
+class RenderSystem
+{
+  public:
+    static RenderSystem *Instance();
 
-		void SetMainWindow(sf::RenderWindow* newWindow);
-		sf::RenderWindow& GetMainWindow() const;
+    void SetMainWindow(sf::RenderWindow *newWindow);
+    sf::RenderWindow &GetMainWindow() const;
 
-		void Render(const sf::Drawable& drawable);
-	private:
-		sf::RenderWindow* m_windowPtr;
+    void Render(const sf::Drawable &drawable);
 
-		RenderSystem() {}
-		~RenderSystem() {}
+  private:
+    sf::RenderWindow *m_windowPtr;
 
-		RenderSystem(RenderSystem const&) = delete;
-		RenderSystem& operator= (RenderSystem const&) = delete;
-	};
+    RenderSystem()
+    {
+    }
+    ~RenderSystem()
+    {
+    }
 
-}
+    RenderSystem(RenderSystem const &) = delete;
+    RenderSystem &operator=(RenderSystem const &) = delete;
+};
+
+} // namespace Engine

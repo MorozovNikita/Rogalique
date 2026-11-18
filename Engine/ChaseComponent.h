@@ -9,50 +9,51 @@
 
 namespace Engine
 {
-	class GameObject;
+class GameObject;
 
-	struct ChaseSettings
-	{
-		GameObject* target = nullptr;
-		float cellSize = 0.f;
-		std::set<std::pair<int, int>> walkable;
-		float detectionRadius = 0.f;
-		float stopDistance = 0.f;
-	};
+struct ChaseSettings
+{
+    GameObject *target = nullptr;
+    float cellSize = 0.f;
+    std::set<std::pair<int, int>> walkable;
+    float detectionRadius = 0.f;
+    float stopDistance = 0.f;
+};
 
-	class ChaseComponent : public DirectionComponent
-	{
-	public:
-		using Cell = std::pair<int, int>;
+class ChaseComponent : public DirectionComponent
+{
+  public:
+    using Cell = std::pair<int, int>;
 
-		ChaseComponent(GameObject* gameObject);
+    ChaseComponent(GameObject *gameObject);
 
-		void Initialize(const ChaseSettings& settings);
-		GameObject* GetTarget() const;
+    void Initialize(const ChaseSettings &settings);
+    GameObject *GetTarget() const;
 
-		void Update(float deltaTime) override;
-		void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
-		float GetHorizontalAxis() const override;
-		float GetVerticalAxis() const override;
-	private:
-		Cell ToCell(const Vector2Df& position) const;
-		void Stop();
+    float GetHorizontalAxis() const override;
+    float GetVerticalAxis() const override;
 
-		GameObject* target = nullptr;
+  private:
+    Cell ToCell(const Vector2Df &position) const;
+    void Stop();
 
-		float horizontalAxis = 0.f;
-		float verticalAxis = 0.f;
+    GameObject *target = nullptr;
 
-		std::set<Cell> walkable;
-		std::vector<Cell> path;
+    float horizontalAxis = 0.f;
+    float verticalAxis = 0.f;
 
-		size_t waypointIndex = 0;
-		Cell lastTargetCell = { -1, -1 };
-		bool hasTargetCell = false;
+    std::set<Cell> walkable;
+    std::vector<Cell> path;
 
-		float cellSize = 0.f;
-		float detectionRadius = 0.f;
-		float stopDistance = 0.f;
-	};
-}
+    size_t waypointIndex = 0;
+    Cell lastTargetCell = {-1, -1};
+    bool hasTargetCell = false;
+
+    float cellSize = 0.f;
+    float detectionRadius = 0.f;
+    float stopDistance = 0.f;
+};
+} // namespace Engine

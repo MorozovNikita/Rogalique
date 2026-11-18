@@ -143,21 +143,21 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="DeveloperLevel.cpp" />
-    <ClCompile Include="Floor.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="IDelayedAction.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="MazeGenerator.cpp" />
-    <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="MonsterFactory.cpp" />
-    <ClCompile Include="LocomotionAnimator.cpp" />
-    <ClCompile Include="Music.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="Game\Application.cpp" />
+    <ClCompile Include="Game\DeveloperLevel.cpp" />
+    <ClCompile Include="Game\Floor.cpp" />
+    <ClCompile Include="Game\GameObject.cpp" />
+    <ClCompile Include="Game\IDelayedAction.cpp" />
+    <ClCompile Include="Game\Main.cpp" />
+    <ClCompile Include="Game\MainMenu.cpp" />
+    <ClCompile Include="Game\MazeGenerator.cpp" />
+    <ClCompile Include="Game\Monster.cpp" />
+    <ClCompile Include="Game\MonsterFactory.cpp" />
+    <ClCompile Include="Game\LocomotionAnimator.cpp" />
+    <ClCompile Include="Game\Music.cpp" />
+    <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\State.cpp" />
+    <ClCompile Include="Game\StateStack.cpp" />
     <ClCompile Include="Engine\AttackComponent.cpp" />
     <ClCompile Include="Engine\ConeAreaComponent.cpp" />
     <ClCompile Include="Engine\AudioComponent.cpp" />
@@ -186,30 +186,30 @@
     <ClCompile Include="Engine\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\TransformComponent.cpp" />
     <ClCompile Include="Engine\Trigger.cpp" />
-    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Game\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Collidable.h" />
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="DeveloperLevel.h" />
-    <ClInclude Include="Floor.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="IDelayedAction.h" />
-    <ClInclude Include="IObserver.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="MazeGenerator.h" />
-    <ClInclude Include="Monster.h" />
-    <ClInclude Include="MonsterFactory.h" />
-    <ClInclude Include="LocomotionAnimator.h" />
-    <ClInclude Include="Music.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceHolder.h" />
-    <ClInclude Include="ResourceIdentifiers.h" />
-    <ClInclude Include="Settings.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="StateIdentifiers.h" />
-    <ClInclude Include="StateStack.h" />
+    <ClInclude Include="Game\Application.h" />
+    <ClInclude Include="Game\Collidable.h" />
+    <ClInclude Include="Game\Constants.h" />
+    <ClInclude Include="Game\DeveloperLevel.h" />
+    <ClInclude Include="Game\Floor.h" />
+    <ClInclude Include="Game\GameObject.h" />
+    <ClInclude Include="Game\IDelayedAction.h" />
+    <ClInclude Include="Game\IObserver.h" />
+    <ClInclude Include="Game\MainMenu.h" />
+    <ClInclude Include="Game\MazeGenerator.h" />
+    <ClInclude Include="Game\Monster.h" />
+    <ClInclude Include="Game\MonsterFactory.h" />
+    <ClInclude Include="Game\LocomotionAnimator.h" />
+    <ClInclude Include="Game\Music.h" />
+    <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\ResourceHolder.h" />
+    <ClInclude Include="Game\ResourceIdentifiers.h" />
+    <ClInclude Include="Game\Settings.h" />
+    <ClInclude Include="Game\State.h" />
+    <ClInclude Include="Game\StateIdentifiers.h" />
+    <ClInclude Include="Game\StateStack.h" />
     <ClInclude Include="Engine\AudioComponent.h" />
     <ClInclude Include="Engine\CameraComponent.h" />
     <ClInclude Include="Engine\ChaseComponent.h" />
@@ -240,10 +240,10 @@
     <ClInclude Include="Engine\TransformComponent.h" />
     <ClInclude Include="Engine\Trigger.h" />
     <ClInclude Include="Engine\Vector.h" />
-    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Game\Wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ResourceHolder.inl" />
+    <None Include="Game\ResourceHolder.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Engine\Engine.vcxproj">

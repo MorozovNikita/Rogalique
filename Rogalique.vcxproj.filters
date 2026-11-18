@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Исходные файлы">
@@ -18,37 +18,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Game\Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
+    <ClCompile Include="Game\State.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="StateStack.cpp">
+    <ClCompile Include="Game\StateStack.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="Game\Application.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Game\GameObject.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="IDelayedAction.cpp">
+    <ClCompile Include="Game\IDelayedAction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Game\Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterFactory.cpp">
+    <ClCompile Include="Game\MonsterFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="LocomotionAnimator.cpp">
+    <ClCompile Include="Game\LocomotionAnimator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="DeveloperLevel.cpp">
+    <ClCompile Include="Game\DeveloperLevel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
+    <ClCompile Include="Game\MainMenu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Engine\AttackComponent.cpp">
@@ -129,72 +129,72 @@
     <ClCompile Include="Engine\Trigger.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Floor.cpp">
+    <ClCompile Include="Game\Floor.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
+    <ClCompile Include="Game\Wall.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Music.cpp">
+    <ClCompile Include="Game\Music.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="Game\Monster.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MazeGenerator.cpp">
+    <ClCompile Include="Game\MazeGenerator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="State.h">
+    <ClInclude Include="Game\State.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="StateIdentifiers.h">
+    <ClInclude Include="Game\StateIdentifiers.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="StateStack.h">
+    <ClInclude Include="Game\StateStack.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceHolder.h">
+    <ClInclude Include="Game\ResourceHolder.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceIdentifiers.h">
+    <ClInclude Include="Game\ResourceIdentifiers.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Constants.h">
+    <ClInclude Include="Game\Constants.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="Game\Application.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Collidable.h">
+    <ClInclude Include="Game\Collidable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="Game\GameObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="IDelayedAction.h">
+    <ClInclude Include="Game\IDelayedAction.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="IObserver.h">
+    <ClInclude Include="Game\IObserver.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Settings.h">
+    <ClInclude Include="Game\Settings.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Game\Player.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterFactory.h">
+    <ClInclude Include="Game\MonsterFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="LocomotionAnimator.h">
+    <ClInclude Include="Game\LocomotionAnimator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DeveloperLevel.h">
+    <ClInclude Include="Game\DeveloperLevel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.h">
+    <ClInclude Include="Game\MainMenu.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Engine\AudioComponent.h">
@@ -287,24 +287,24 @@
     <ClInclude Include="Engine\Vector.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Floor.h">
+    <ClInclude Include="Game\Floor.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.h">
+    <ClInclude Include="Game\Wall.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Music.h">
+    <ClInclude Include="Game\Music.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="Game\Monster.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MazeGenerator.h">
+    <ClInclude Include="Game\MazeGenerator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ResourceHolder.inl">
+    <None Include="Game\ResourceHolder.inl">
       <Filter>Файлы заголовков</Filter>
     </None>
   </ItemGroup>
