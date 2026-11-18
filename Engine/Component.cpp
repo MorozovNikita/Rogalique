@@ -4,17 +4,17 @@
 namespace Engine
 {
 
-	Component::Component(GameObject* gameObject) : m_gameObject(gameObject)
-	{
-	}
-
-	Component::~Component()
-	{
-	}
-
-	GameObject* Component::GetGameObject()
-	{
-		return m_gameObject;
-	}
-
+Component::Component(GameObject *gameObject) : m_gameObject(gameObject)
+{
 }
+
+Component::~Component()
+{
+}
+
+GameObject *Component::GetGameObject()
+{
+    return m_gameObject;
+}
+
+} // namespace Engine

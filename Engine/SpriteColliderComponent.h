@@ -8,20 +8,21 @@
 
 namespace Engine
 {
-	class SpriteColliderComponent : public ColliderComponent
-	{
-	public:
-		SpriteColliderComponent(GameObject* gameObject);
-		~SpriteColliderComponent();
+class SpriteColliderComponent : public ColliderComponent
+{
+  public:
+    SpriteColliderComponent(GameObject *gameObject);
+    ~SpriteColliderComponent();
 
-		void SetBoundsScale(float scaleX, float scaleY);
+    void SetBoundsScale(float scaleX, float scaleY);
 
-		void Update(float deltaTime) override;
-		void Render() override;
-	private:
-		SpriteRendererComponent* renderer = nullptr;
-		const sf::Sprite* sprite = nullptr;
-		float boundsScaleX = 1.f;
-		float boundsScaleY = 1.f;
-	};
-}
+    void Update(float deltaTime) override;
+    void Render() override;
+
+  private:
+    SpriteRendererComponent *renderer = nullptr;
+    const sf::Sprite *sprite = nullptr;
+    float boundsScaleX = 1.f;
+    float boundsScaleY = 1.f;
+};
+} // namespace Engine

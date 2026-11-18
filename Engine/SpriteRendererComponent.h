@@ -8,29 +8,30 @@
 
 namespace Engine
 {
-	class SpriteRendererComponent : public Component
-	{
-	public:
-		SpriteRendererComponent(GameObject* gameObject);
-		~SpriteRendererComponent();
+class SpriteRendererComponent : public Component
+{
+  public:
+    SpriteRendererComponent(GameObject *gameObject);
+    ~SpriteRendererComponent();
 
-		void Update(float deltaTime) override;
-		void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
-		void ApplyTransform();
-		const sf::Sprite* GetSprite() const;
-		void SetTexture(const sf::Texture& newTexture);
-		void SetPixelSize(int newWidth, int newHeight);
+    void ApplyTransform();
+    const sf::Sprite *GetSprite() const;
+    void SetTexture(const sf::Texture &newTexture);
+    void SetPixelSize(int newWidth, int newHeight);
 
-		void FlipX(bool flip);
-		void FlipY(bool flip);
-	private:
-		sf::Texture placeholder;
-		Vector2Df scale;
-		sf::Sprite* sprite = nullptr;
-		TransformComponent* transform;
+    void FlipX(bool flip);
+    void FlipY(bool flip);
 
-		bool isFlipX = false;
-		bool isFlipY = false;
-	};
-}
+  private:
+    sf::Texture placeholder;
+    Vector2Df scale;
+    sf::Sprite *sprite = nullptr;
+    TransformComponent *transform;
+
+    bool isFlipX = false;
+    bool isFlipY = false;
+};
+} // namespace Engine
