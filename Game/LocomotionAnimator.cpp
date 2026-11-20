@@ -3,6 +3,7 @@
 #include "DirectionComponent.h"
 #include "GameWorld.h"
 #include "SpriteClipAnimatorComponent.h"
+#include "SpriteRendererComponent.h"
 
 #include <stdexcept>
 
@@ -18,6 +19,16 @@ LocomotionAnimator::LocomotionAnimator(Engine::GameObject *gameObject) : Engine:
     }
 }
 
+void LocomotionAnimator::SetMirrorHorizontal(bool mirror)
+{
+    mirrorHorizontal = mirror;
+    renderer = m_gameObject->GetComponent<Engine::SpriteRendererComponent>();
+    if (mirrorHorizontal && renderer == nullptr)
+    {
+        throw std::logic_error("Horizontal mirror requires a sprite renderer");
+    }
+}
+
 void LocomotionAnimator::Update(float)
 {
     if (animator->IsOneShotPlaying())
@@ -29,6 +40,19 @@ void LocomotionAnimator::Update(float)
     const bool moving = axis.x != 0.f || axis.y != 0.f;
     animator->SetFacing(axis);
     animator->Play(moving ? "run" : "idle");
+    if (!mirrorHorizontal || renderer == nullptr)
+    {
+        return;
+    }
+
+    if (axis.x < 0.f)
+    {
+        renderer->FlipX(true);
+    }
+    else if (axis.x > 0.f)
+    {
+        renderer->FlipX(false);
+    }
 }
 
 void LocomotionAnimator::Render()

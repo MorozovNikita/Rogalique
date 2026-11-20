@@ -36,8 +36,8 @@ void SpriteColliderComponent::Update(float deltaTime)
 
     const float width = bounds.size.x * boundsScaleX;
     const float height = bounds.size.y * boundsScaleY;
-    bounds.position.x += (bounds.size.x - width) * 0.5f;
-    bounds.position.y += (bounds.size.y - height) * 0.5f;
+    const sf::Vector2f center = sprite->getPosition();
+    bounds.position = {center.x - width * 0.5f, center.y - height * 0.5f};
     bounds.size = {width, height};
 }
 

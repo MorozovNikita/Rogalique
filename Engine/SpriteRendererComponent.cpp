@@ -56,7 +56,19 @@ void SpriteRendererComponent::SetTexture(const sf::Texture &newTexture)
 {
     sprite->setTexture(newTexture, true);
     const auto textureSize = sprite->getTexture().getSize();
-    sprite->setOrigin({0.5f * textureSize.x, 0.5f * textureSize.y});
+    sprite->setOrigin({originFraction.x * textureSize.x, originFraction.y * textureSize.y});
+}
+
+void SpriteRendererComponent::SetOriginFraction(float originX, float originY)
+{
+    originFraction = {originX, originY};
+    if (sprite == nullptr)
+    {
+        return;
+    }
+
+    const auto textureSize = sprite->getTexture().getSize();
+    sprite->setOrigin({originFraction.x * textureSize.x, originFraction.y * textureSize.y});
 }
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight)
 {

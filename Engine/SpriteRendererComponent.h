@@ -21,6 +21,7 @@ class SpriteRendererComponent : public Component
     const sf::Sprite *GetSprite() const;
     void SetTexture(const sf::Texture &newTexture);
     void SetPixelSize(int newWidth, int newHeight);
+    void SetOriginFraction(float originX, float originY);
 
     void FlipX(bool flip);
     void FlipY(bool flip);
@@ -28,6 +29,7 @@ class SpriteRendererComponent : public Component
   private:
     sf::Texture placeholder;
     Vector2Df scale;
+    Vector2Df originFraction{0.5f, 0.5f};
     sf::Sprite *sprite = nullptr;
     TransformComponent *transform;
 

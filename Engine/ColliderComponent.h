@@ -27,6 +27,8 @@ class ColliderComponent : public Component
     virtual void Update(float deltaTime) = 0;
     virtual void Render() = 0;
 
+    sf::FloatRect GetBounds() const;
+
     void SetTrigger(bool newIsTrigger);
     void SetCollisionLayer(unsigned int newLayer);
     void SetCollisionMask(unsigned int newMask);

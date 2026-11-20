@@ -9,6 +9,7 @@ namespace Engine
 {
 class ChaseComponent;
 class ConeAreaComponent;
+class GameObject;
 class DirectionComponent;
 class MovementComponent;
 class SpriteClipAnimatorComponent;
@@ -38,6 +39,7 @@ class AttackComponent : public Component
     void Resolve();
     float CalculateDamage() const;
     bool ChaseTargetInCone() const;
+    bool TargetInCone(GameObject *target) const;
     bool IsClipSwinging() const;
 
     AttackTrigger trigger;
