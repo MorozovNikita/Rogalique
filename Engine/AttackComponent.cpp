@@ -2,6 +2,7 @@
 #include "AttackComponent.h"
 
 #include "ChaseComponent.h"
+#include "ColliderComponent.h"
 #include "ConeAreaComponent.h"
 #include "DirectionComponent.h"
 #include "GameObject.h"
@@ -87,22 +88,16 @@ void AttackComponent::Update(float deltaTime)
             BeginSwing();
         }
     }
-    else if (!IsClipSwinging() && swingTime <= 0.f)
+    else if (!IsClipSwinging() && swingTime <= 0.f && ChaseTargetInCone())
     {
-        if (ChaseTargetInCone())
-        {
-            BeginSwing();
-        }
-        else
-        {
-            movement->SetSpeed(runSpeed);
-        }
+        BeginSwing();
     }
 
     const bool swinging = IsClipSwinging() || swingTime > 0.f;
     cone->SetActive(swinging);
     if (!swinging)
     {
+        movement->SetSpeed(runSpeed);
         return;
     }
 
@@ -193,12 +188,7 @@ void AttackComponent::Resolve()
         }
 
         auto *stats = target->GetComponent<StatsComponent>();
-        auto *targetTransform = target->GetComponent<TransformComponent>();
-        if (stats == nullptr || targetTransform == nullptr || stats->GetCurrentHealth() <= 0.f)
-        {
-            continue;
-        }
-        if (!cone->Contains(targetTransform->GetWorldPosition()))
+        if (stats == nullptr || stats->GetCurrentHealth() <= 0.f || !TargetInCone(target))
         {
             continue;
         }
@@ -221,8 +211,33 @@ bool AttackComponent::ChaseTargetInCone() const
 
     GameObject *target = chase->GetTarget();
     auto *stats = target->GetComponent<StatsComponent>();
+    if (stats == nullptr || stats->GetCurrentHealth() <= 0.f)
+    {
+        return false;
+    }
+
+    return TargetInCone(target);
+}
+
+bool AttackComponent::TargetInCone(GameObject *target) const
+{
+    if (target == nullptr)
+    {
+        return false;
+    }
+
+    auto *collider = target->GetComponent<ColliderComponent>();
+    if (collider != nullptr)
+    {
+        const sf::FloatRect bounds = collider->GetBounds();
+        if (bounds.size.x > 0.f && bounds.size.y > 0.f)
+        {
+            return cone->Intersects(bounds);
+        }
+    }
+
     auto *targetTransform = target->GetComponent<TransformComponent>();
-    if (stats == nullptr || targetTransform == nullptr || stats->GetCurrentHealth() <= 0.f)
+    if (targetTransform == nullptr)
     {
         return false;
     }

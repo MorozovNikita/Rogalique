@@ -7,6 +7,11 @@ ColliderComponent::ColliderComponent(GameObject *gameObject) : Component(gameObj
 {
 }
 
+sf::FloatRect ColliderComponent::GetBounds() const
+{
+    return bounds;
+}
+
 void ColliderComponent::SetTrigger(bool newIsTrigger)
 {
     isTrigger = newIsTrigger;

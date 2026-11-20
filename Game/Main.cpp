@@ -21,7 +21,10 @@ int main()
         sf::RenderWindow window(sf::VideoMode({1280, 720}), "Roguelike");
         RenderSystem::Instance()->SetMainWindow(&window);
 
-        ResourceSystem::Instance()->LoadTexture("ball", "Resources/textures/ball.png");
+        const std::string knightFolder = "Resources/textures/knight/Knight_1/";
+        ResourceSystem::Instance()->LoadTextureMap("knight_idle", knightFolder + "Idle.png", {128, 128}, 4, false);
+        ResourceSystem::Instance()->LoadTextureMap("knight_run", knightFolder + "Run.png", {128, 128}, 7, false);
+        ResourceSystem::Instance()->LoadTextureMap("knight_attack", knightFolder + "Attack 1.png", {128, 128}, 5, false);
 
         ResourceSystem::Instance()->LoadTextureMap("level_floors", "Resources/textures/Floor.png", {16, 16}, 49, false);
         ResourceSystem::Instance()->LoadTextureMap("level_walls", "Resources/textures/Wall.png", {16, 16}, 48, false);

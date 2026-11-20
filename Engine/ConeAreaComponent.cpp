@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
@@ -90,6 +91,19 @@ bool ConeAreaComponent::Contains(const Vector2Df &worldPoint) const
     const float dot = offsetX * direction.x + offsetY * direction.y;
     const float cosHalf = std::cos(halfAngle);
     return dot >= cosHalf * std::sqrt(distanceSquared * directionLengthSquared);
+}
+
+bool ConeAreaComponent::Intersects(const sf::FloatRect &rect) const
+{
+    if (transform == nullptr || rect.size.x <= 0.f || rect.size.y <= 0.f)
+    {
+        return false;
+    }
+
+    const Vector2Df origin = transform->GetWorldPosition();
+    const float closestX = std::clamp(origin.x, rect.position.x, rect.position.x + rect.size.x);
+    const float closestY = std::clamp(origin.y, rect.position.y, rect.position.y + rect.size.y);
+    return Contains({closestX, closestY});
 }
 
 void ConeAreaComponent::Update(float)

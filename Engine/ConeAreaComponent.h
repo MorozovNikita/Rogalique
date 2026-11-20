@@ -3,6 +3,8 @@
 #include "Component.h"
 #include "Vector.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace Engine
 {
 class TransformComponent;
@@ -20,6 +22,7 @@ class ConeAreaComponent : public Component
     bool IsActive() const;
     float GetRange() const;
     bool Contains(const Vector2Df &worldPoint) const;
+    bool Intersects(const sf::FloatRect &rect) const;
 
     void Update(float deltaTime) override;
     void Render() override;
