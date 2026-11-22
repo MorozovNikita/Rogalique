@@ -1,7 +1,9 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -28,10 +30,12 @@ class ResourceSystem
     void LoadSoundBuffer(const std::string &name, std::string sourcePath);
     const sf::SoundBuffer *GetSoundBuffer(const std::string &name) const;
     void DeleteSharedSoundBuffer(const std::string &name);
+    void PlayEffect(const std::string &name);
 
     void LoadMusic(const std::string &name, std::string sourcePath);
     void PlayMusic(const std::string &nameOrPath);
     void StopMusic();
+    bool IsMusicPlaying() const;
 
     void SetMusicVolume(float volume);
     void SetEffectsVolume(float volume);
@@ -53,6 +57,7 @@ class ResourceSystem
     std::map<std::string, std::string> musicPaths;
 
     sf::Music currentMusic;
+    std::vector<std::unique_ptr<sf::Sound>> activeEffects;
     float musicVolume = 100.f;
     float effectsVolume = 100.f;
 

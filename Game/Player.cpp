@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include "DeathAnimator.h"
 #include "LocomotionAnimator.h"
 
 #include <AttackComponent.h>
@@ -27,6 +28,7 @@ Player::Player(const Engine::Vector2Df &position)
     animator->AddClip("idle", "knight_idle", 4, 1, 0.16f, true, -1);
     animator->AddClip("run", "knight_run", 7, 1, 0.08f, true, -1);
     animator->AddClip("attack", "knight_attack", 5, 1, 0.07f, false, 4);
+    animator->AddClip("death", "knight_death", 6, 1, 0.1f, false, -1);
     animator->Play("idle");
     renderer->SetPixelSize(160, 160);
 
@@ -60,6 +62,10 @@ Player::Player(const Engine::Vector2Df &position)
 
     auto statsDisplay = gameObject->AddComponent<Engine::StatsDisplayComponent>();
     statsDisplay->SetStrategy(std::make_unique<Engine::HealthArmorDisplayStrategy>("bar_bg", "bar_hp", "bar_shield"));
+
+    auto death = gameObject->AddComponent<DeathAnimator>();
+    death->SetSound("death");
+    death->SetDestroyOnFinish(false);
 }
 
 Engine::GameObject *Player::GetGameObject()

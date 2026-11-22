@@ -2,6 +2,7 @@
 
 #include "GameWorld.h"
 #include "MovementComponent.h"
+#include "ResourceSystem.h"
 #include "SpriteClipAnimatorComponent.h"
 #include "StatsComponent.h"
 
@@ -20,6 +21,16 @@ DeathAnimator::DeathAnimator(Engine::GameObject *gameObject) : Engine::Component
     }
 }
 
+void DeathAnimator::SetSound(const std::string &key)
+{
+    soundKey = key;
+}
+
+void DeathAnimator::SetDestroyOnFinish(bool destroy)
+{
+    destroyOnFinish = destroy;
+}
+
 void DeathAnimator::Update(float)
 {
     if (stats->GetCurrentHealth() > 0.f)
@@ -30,6 +41,10 @@ void DeathAnimator::Update(float)
     if (!dying)
     {
         animator->Play("death", true);
+        if (!soundKey.empty())
+        {
+            Engine::ResourceSystem::Instance()->PlayEffect(soundKey);
+        }
         dying = true;
     }
 
@@ -38,7 +53,7 @@ void DeathAnimator::Update(float)
         movement->SetSpeed(0.f);
     }
 
-    if (animator->IsPlaying("death") && animator->IsFinished())
+    if (destroyOnFinish && animator->IsPlaying("death") && animator->IsFinished())
     {
         Engine::GameWorld::Instance()->DestroyGameObject(m_gameObject);
     }

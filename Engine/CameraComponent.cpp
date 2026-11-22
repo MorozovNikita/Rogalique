@@ -34,6 +34,16 @@ void CameraComponent::Update(float deltaTime)
     view->setCenter(Convert<sf::Vector2f, Vector2Df>(position));
     view->setRotation(sf::degrees(rotation));
 
+    Apply();
+}
+
+void CameraComponent::Apply()
+{
+    if (window == nullptr || view == nullptr)
+    {
+        return;
+    }
+
     window->setView(*view);
 }
 
