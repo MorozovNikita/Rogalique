@@ -17,6 +17,7 @@ class LocomotionAnimator : public Engine::Component
     LocomotionAnimator(Engine::GameObject *gameObject);
 
     void SetMirrorHorizontal(bool mirror);
+    void SetEnabled(bool isEnabled);
 
     void Update(float deltaTime) override;
     void Render() override;
@@ -26,5 +27,6 @@ class LocomotionAnimator : public Engine::Component
     Engine::DirectionComponent *direction = nullptr;
     Engine::SpriteRendererComponent *renderer = nullptr;
     bool mirrorHorizontal = false;
+    bool enabled = true;
 };
 } // namespace Roguelike

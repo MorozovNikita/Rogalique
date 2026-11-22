@@ -28,6 +28,7 @@ class ColliderComponent : public Component
     virtual void Render() = 0;
 
     sf::FloatRect GetBounds() const;
+    void ShiftBounds(float offsetX, float offsetY);
 
     void SetTrigger(bool newIsTrigger);
     void SetCollisionLayer(unsigned int newLayer);

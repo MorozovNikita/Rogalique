@@ -1,5 +1,7 @@
 #include "GameState.h"
 
+#include "LevelGateAnimator.h"
+
 #include "CameraComponent.h"
 #include "GameWorld.h"
 #include "Logger.h"
@@ -50,8 +52,8 @@ void GameState::loadResources()
         const std::string folderName = "Vampires" + std::to_string(index);
         const std::string key = "vampire" + std::to_string(index);
         resources->LoadTextureMap(key + "_idle",
-                                  vampiresFolder + folderName + '/' + folderName + "_Idle_without_shadow.png",
-                                  {64, 64}, 16, false);
+                                  vampiresFolder + folderName + '/' + folderName + "_Idle_without_shadow.png", {64, 64},
+                                  16, false);
         resources->LoadTextureMap(key + "_run",
                                   vampiresFolder + folderName + '/' + folderName + "_Run_without_shadow.png", {64, 64},
                                   32, false);
@@ -96,6 +98,7 @@ bool GameState::update(sf::Time dt)
         Engine::GameWorld::Instance()->FixedUpdate(dt.asSeconds());
         Engine::GameWorld::Instance()->LateUpdate();
 
+        bool nextLevel = false;
         for (Engine::GameObject *object : Engine::GameWorld::Instance()->GetGameObjects())
         {
             if (object->GetName() != "Player")
@@ -112,6 +115,18 @@ bool GameState::update(sf::Time dt)
                 requestStackPop();
                 break;
             }
+
+            LevelGateAnimator *gate = object->GetComponent<LevelGateAnimator>();
+            if (gate != nullptr && gate->ConsumeLevelChange())
+            {
+                nextLevel = true;
+                break;
+            }
+        }
+
+        if (nextLevel && level != nullptr)
+        {
+            level->Restart();
         }
     }
     catch (const std::exception &exception)

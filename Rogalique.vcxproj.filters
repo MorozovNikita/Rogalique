@@ -48,6 +48,9 @@
     <ClCompile Include="Game\DeathAnimator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Game\LevelGateAnimator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="Game\DeveloperLevel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -207,6 +210,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Game\DeathAnimator.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LevelGateAnimator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Game\DeveloperLevel.h">

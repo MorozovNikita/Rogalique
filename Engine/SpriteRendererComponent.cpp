@@ -28,7 +28,8 @@ void SpriteRendererComponent::ApplyTransform()
         return;
     }
 
-    sprite->setPosition(Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
+    const Vector2Df worldPosition = transform->GetWorldPosition();
+    sprite->setPosition(Convert<sf::Vector2f, Vector2Df>(worldPosition + drawOffset));
     sprite->setRotation(sf::degrees(transform->GetWorldRotation()));
 
     auto transformScale = Convert<sf::Vector2f, Vector2Df>(transform->GetWorldScale());
@@ -41,11 +42,13 @@ void SpriteRendererComponent::Update(float deltaTime)
 }
 void SpriteRendererComponent::Render()
 {
-    if (sprite != nullptr)
+    if (sprite == nullptr || visibleTopFraction <= 0.f)
     {
-        ApplyTransform();
-        RenderSystem::Instance()->Render(*sprite);
+        return;
     }
+
+    ApplyTransform();
+    RenderSystem::Instance()->Render(*sprite);
 }
 
 const sf::Sprite *SpriteRendererComponent::GetSprite() const
@@ -55,8 +58,7 @@ const sf::Sprite *SpriteRendererComponent::GetSprite() const
 void SpriteRendererComponent::SetTexture(const sf::Texture &newTexture)
 {
     sprite->setTexture(newTexture, true);
-    const auto textureSize = sprite->getTexture().getSize();
-    sprite->setOrigin({originFraction.x * textureSize.x, originFraction.y * textureSize.y});
+    ApplyVisibleTop();
 }
 
 void SpriteRendererComponent::SetOriginFraction(float originX, float originY)
@@ -70,6 +72,57 @@ void SpriteRendererComponent::SetOriginFraction(float originX, float originY)
     const auto textureSize = sprite->getTexture().getSize();
     sprite->setOrigin({originFraction.x * textureSize.x, originFraction.y * textureSize.y});
 }
+void SpriteRendererComponent::SetDrawOffset(const Vector2Df &offset)
+{
+    drawOffset = offset;
+}
+
+Vector2Df SpriteRendererComponent::GetDrawOffset() const
+{
+    return drawOffset;
+}
+
+void SpriteRendererComponent::SetVisibleTopFraction(float fraction)
+{
+    if (fraction < 0.f)
+    {
+        fraction = 0.f;
+    }
+    if (fraction > 1.f)
+    {
+        fraction = 1.f;
+    }
+
+    visibleTopFraction = fraction;
+    ApplyVisibleTop();
+}
+
+void SpriteRendererComponent::ApplyVisibleTop()
+{
+    if (sprite == nullptr || visibleTopFraction <= 0.f)
+    {
+        return;
+    }
+
+    const auto textureSize = sprite->getTexture().getSize();
+    int height = static_cast<int>(textureSize.y);
+    if (visibleTopFraction < 1.f)
+    {
+        height = static_cast<int>(textureSize.y * visibleTopFraction + 0.5f);
+    }
+    if (height < 1)
+    {
+        height = 1;
+    }
+    if (height > static_cast<int>(textureSize.y))
+    {
+        height = static_cast<int>(textureSize.y);
+    }
+
+    sprite->setTextureRect(sf::IntRect({0, 0}, {static_cast<int>(textureSize.x), height}));
+    sprite->setOrigin({originFraction.x * textureSize.x, originFraction.y * textureSize.y});
+}
+
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight)
 {
     const auto originalSize = sprite->getTexture().getSize();
