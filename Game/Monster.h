@@ -18,6 +18,7 @@ struct MonsterAppearance
     std::string idle;
     std::string run;
     std::string attack;
+    std::string death;
 };
 
 class Monster

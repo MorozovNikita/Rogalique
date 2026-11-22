@@ -166,6 +166,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="StatsComponent.h" />
+    <ClInclude Include="StatsDisplayComponent.h" />
+    <ClInclude Include="HealthArmorDisplayStrategy.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Matrix2D.h" />
@@ -187,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttackComponent.cpp" />
+    <ClCompile Include="StatsDisplayComponent.cpp" />
+    <ClCompile Include="HealthArmorDisplayStrategy.cpp" />
     <ClCompile Include="ConeAreaComponent.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />

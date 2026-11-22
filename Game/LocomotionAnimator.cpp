@@ -4,6 +4,7 @@
 #include "GameWorld.h"
 #include "SpriteClipAnimatorComponent.h"
 #include "SpriteRendererComponent.h"
+#include "StatsComponent.h"
 
 #include <stdexcept>
 
@@ -31,7 +32,8 @@ void LocomotionAnimator::SetMirrorHorizontal(bool mirror)
 
 void LocomotionAnimator::Update(float)
 {
-    if (animator->IsOneShotPlaying())
+    const auto *stats = m_gameObject->GetComponent<Engine::StatsComponent>();
+    if (animator->IsOneShotPlaying() || (stats != nullptr && stats->GetCurrentHealth() <= 0.f))
     {
         return;
     }

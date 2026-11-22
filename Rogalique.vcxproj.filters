@@ -45,6 +45,9 @@
     <ClCompile Include="Game\LocomotionAnimator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Game\DeathAnimator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="Game\DeveloperLevel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -52,6 +55,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Engine\AttackComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\StatsDisplayComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\HealthArmorDisplayStrategy.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ConeAreaComponent.cpp">
@@ -191,6 +200,9 @@
     <ClInclude Include="Game\LocomotionAnimator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Game\DeathAnimator.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
     <ClInclude Include="Game\DeveloperLevel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -216,6 +228,12 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\StatsDisplayComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\HealthArmorDisplayStrategy.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\DirectionComponent.h">

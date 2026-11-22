@@ -154,11 +154,14 @@
     <ClCompile Include="Game\Monster.cpp" />
     <ClCompile Include="Game\MonsterFactory.cpp" />
     <ClCompile Include="Game\LocomotionAnimator.cpp" />
+    <ClCompile Include="Game\DeathAnimator.cpp" />
     <ClCompile Include="Game\Music.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\State.cpp" />
     <ClCompile Include="Game\StateStack.cpp" />
     <ClCompile Include="Engine\AttackComponent.cpp" />
+    <ClCompile Include="Engine\StatsDisplayComponent.cpp" />
+    <ClCompile Include="Engine\HealthArmorDisplayStrategy.cpp" />
     <ClCompile Include="Engine\ConeAreaComponent.cpp" />
     <ClCompile Include="Engine\AudioComponent.cpp" />
     <ClCompile Include="Engine\CameraComponent.cpp" />
@@ -202,6 +205,7 @@
     <ClInclude Include="Game\Monster.h" />
     <ClInclude Include="Game\MonsterFactory.h" />
     <ClInclude Include="Game\LocomotionAnimator.h" />
+    <ClInclude Include="Game\DeathAnimator.h" />
     <ClInclude Include="Game\Music.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\ResourceHolder.h" />
@@ -217,6 +221,8 @@
     <ClInclude Include="Engine\ColliderComponent.h" />
     <ClInclude Include="Engine\Collision.h" />
     <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\StatsDisplayComponent.h" />
+    <ClInclude Include="Engine\HealthArmorDisplayStrategy.h" />
     <ClInclude Include="Engine\DirectionComponent.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\framework.h" />

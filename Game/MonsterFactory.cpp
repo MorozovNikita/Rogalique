@@ -12,7 +12,7 @@ namespace
 MonsterAppearance VampireAppearance(const char *id)
 {
     const std::string key(id);
-    return {key, key + "_idle", key + "_run", key + "_attack"};
+    return {key, key + "_idle", key + "_run", key + "_attack", key + "_death"};
 }
 } // namespace
 
