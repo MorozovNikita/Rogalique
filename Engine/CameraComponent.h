@@ -14,6 +14,7 @@ class CameraComponent : public Component
 
     void Update(float deltaTime) override;
     void Render() override;
+    void Apply();
 
     void SetWindow(sf::RenderWindow *newWindow);
     void ZoomBy(float newZoom);

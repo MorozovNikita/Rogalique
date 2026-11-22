@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ResourceSystem.h"
 
+#include <algorithm>
 #include <cassert>
 
 namespace Engine
@@ -226,6 +227,27 @@ void ResourceSystem::DeleteSharedSoundBuffer(const std::string &name)
     soundBuffers.erase(found);
 }
 
+void ResourceSystem::PlayEffect(const std::string &name)
+{
+    activeEffects.erase(std::remove_if(activeEffects.begin(), activeEffects.end(),
+                                       [](const std::unique_ptr<sf::Sound> &sound) {
+                                           return sound == nullptr ||
+                                                  sound->getStatus() == sf::SoundSource::Status::Stopped;
+                                       }),
+                        activeEffects.end());
+
+    const sf::SoundBuffer *buffer = GetSoundBuffer(name);
+    if (buffer == nullptr)
+    {
+        return;
+    }
+
+    auto sound = std::make_unique<sf::Sound>(*buffer);
+    sound->setVolume(effectsVolume);
+    sound->play();
+    activeEffects.push_back(std::move(sound));
+}
+
 void ResourceSystem::LoadMusic(const std::string &name, std::string sourcePath)
 {
     musicPaths[name] = std::move(sourcePath);
@@ -258,6 +280,11 @@ void ResourceSystem::StopMusic()
     currentMusic.stop();
 }
 
+bool ResourceSystem::IsMusicPlaying() const
+{
+    return currentMusic.getStatus() == sf::SoundSource::Status::Playing;
+}
+
 void ResourceSystem::SetMusicVolume(float volume)
 {
     musicVolume = volume;
@@ -272,6 +299,7 @@ void ResourceSystem::SetEffectsVolume(float volume)
 void ResourceSystem::Clear()
 {
     StopMusic();
+    activeEffects.clear();
     DeleteAllTextures();
     DeleteAllTextureMaps();
     DeleteAllSoundBuffers();

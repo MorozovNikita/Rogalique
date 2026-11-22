@@ -1,6 +1,10 @@
 #include "Application.h"
 
 #include "Constants.h"
+#include "GameState.h"
+#include "MenuState.h"
+#include "ResourceSystem.h"
+#include "SettingsState.h"
 
 #include <SFML/Graphics/Font.hpp>
 
@@ -15,8 +19,12 @@ Application::Application()
       mStatisticsUpdateTime(), mStatisticsNumFrames(0)
 {
     mWindow.setKeyRepeatEnabled(false);
+    mWindow.setVerticalSyncEnabled(true);
 
     mFonts.load(Fonts::Main, RESOURCES_PATH + "\\Fonts\\PressStart2P-Regular.ttf"s);
+    Engine::ResourceSystem::Instance()->LoadTexture("menu_background", "Resources/textures/MenuBackground.jpg", false);
+    Engine::ResourceSystem::Instance()->LoadMusic("menu", "Resources/music/MenuMusic.mp3");
+    Engine::ResourceSystem::Instance()->SetMusicVolume(mSettings.music ? 100.f : 0.f);
 
     mStatisticsText = std::make_unique<sf::Text>(mFonts.get(Fonts::Main));
     mStatisticsText->setPosition({5.f, 5.f});
@@ -93,6 +101,10 @@ void Application::updateStatistics(sf::Time dt)
 
 void Application::registerStates()
 {
+    mStateStack.registerState<Roguelike::MenuState>(States::Menu);
+    mStateStack.registerState<Roguelike::SettingsState>(States::Settings);
+    mStateStack.registerState<Roguelike::GameState>(States::Game);
+    mStateStack.pushState(States::Menu);
 }
 
 } // namespace Game

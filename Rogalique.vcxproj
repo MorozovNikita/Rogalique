@@ -149,7 +149,9 @@
     <ClCompile Include="Game\GameObject.cpp" />
     <ClCompile Include="Game\IDelayedAction.cpp" />
     <ClCompile Include="Game\Main.cpp" />
-    <ClCompile Include="Game\MainMenu.cpp" />
+    <ClCompile Include="Game\MenuState.cpp" />
+    <ClCompile Include="Game\SettingsState.cpp" />
+    <ClCompile Include="Game\GameState.cpp" />
     <ClCompile Include="Game\MazeGenerator.cpp" />
     <ClCompile Include="Game\Monster.cpp" />
     <ClCompile Include="Game\MonsterFactory.cpp" />
@@ -200,7 +202,9 @@
     <ClInclude Include="Game\GameObject.h" />
     <ClInclude Include="Game\IDelayedAction.h" />
     <ClInclude Include="Game\IObserver.h" />
-    <ClInclude Include="Game\MainMenu.h" />
+    <ClInclude Include="Game\MenuState.h" />
+    <ClInclude Include="Game\SettingsState.h" />
+    <ClInclude Include="Game\GameState.h" />
     <ClInclude Include="Game\MazeGenerator.h" />
     <ClInclude Include="Game\Monster.h" />
     <ClInclude Include="Game\MonsterFactory.h" />

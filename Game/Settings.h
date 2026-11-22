@@ -25,5 +25,6 @@ struct Settings
 {
     ControlMode control = ControlMode::Keyboard;
     InputBindings input;
+    bool music = true;
 };
 } // namespace Game
