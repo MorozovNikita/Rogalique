@@ -40,6 +40,7 @@ class AttackComponent : public Component
     float CalculateDamage() const;
     bool ChaseTargetInCone() const;
     bool TargetInCone(GameObject *target) const;
+    bool IsOwnerDead() const;
     bool IsClipSwinging() const;
 
     AttackTrigger trigger;

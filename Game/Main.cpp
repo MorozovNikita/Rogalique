@@ -44,7 +44,15 @@ int main()
             ResourceSystem::Instance()->LoadTextureMap(
                 key + "_attack", vampiresFolder + folderName + '/' + folderName + "_Attack_without_shadow.png",
                 {64, 64}, 48, false);
+            ResourceSystem::Instance()->LoadTextureMap(
+                key + "_death", vampiresFolder + folderName + '/' + folderName + "_Death_without_shadow.png", {64, 64},
+                44, false);
         }
+
+        const std::string statsFolder = "Resources/textures/Stats/";
+        ResourceSystem::Instance()->LoadTexture("bar_bg", statsFolder + "bar_BG.png", false);
+        ResourceSystem::Instance()->LoadTexture("bar_hp", statsFolder + "bar_hp.png", false);
+        ResourceSystem::Instance()->LoadTexture("bar_shield", statsFolder + "bar_shield.png", false);
 
         ResourceSystem::Instance()->LoadSoundBuffer("music", "Resources/music/dev level music.mp3");
 

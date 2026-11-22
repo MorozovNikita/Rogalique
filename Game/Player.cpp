@@ -3,11 +3,15 @@
 #include "LocomotionAnimator.h"
 
 #include <AttackComponent.h>
+#include <HealthArmorDisplayStrategy.h>
+#include <StatsDisplayComponent.h>
 #include <ConeAreaComponent.h>
 #include <MovementComponent.h>
 #include <SpriteClipAnimatorComponent.h>
 #include <SpriteColliderComponent.h>
 #include <StatsComponent.h>
+
+#include <memory>
 
 namespace Roguelike
 {
@@ -43,7 +47,7 @@ Player::Player(const Engine::Vector2Df &position)
     collider->SetCollisionMask(Engine::CollisionLayer::World);
     collider->SetBoundsScale(0.36f, 0.52f);
 
-    auto states = gameObject->AddComponent<Engine::StatsComponent>(100.f, 50.f);
+    auto states = gameObject->AddComponent<Engine::StatsComponent>(100.f, 20.f);
 
     auto cone = gameObject->AddComponent<Engine::ConeAreaComponent>();
     cone->SetRange(110.f);
@@ -51,8 +55,11 @@ Player::Player(const Engine::Vector2Df &position)
 
     auto locomotion = gameObject->AddComponent<LocomotionAnimator>();
     locomotion->SetMirrorHorizontal(true);
-    auto attack = gameObject->AddComponent<Engine::AttackComponent>(3.f, Engine::AttackTrigger::Input);
+    auto attack = gameObject->AddComponent<Engine::AttackComponent>(20.f, Engine::AttackTrigger::Input);
     attack->SetAttackClip("attack");
+
+    auto statsDisplay = gameObject->AddComponent<Engine::StatsDisplayComponent>();
+    statsDisplay->SetStrategy(std::make_unique<Engine::HealthArmorDisplayStrategy>("bar_bg", "bar_hp", "bar_shield"));
 }
 
 Engine::GameObject *Player::GetGameObject()

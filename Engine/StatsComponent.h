@@ -11,7 +11,7 @@ class StatsComponent : public Component
 {
   public:
     StatsComponent(GameObject *gameObject, float health, float armor)
-        : Component(gameObject), maxHealth{health}, currentHealth{health}, armor{armor}
+        : Component(gameObject), maxHealth{health}, currentHealth{health}, maxArmor{armor}, armor{armor}
     {
     }
 
@@ -26,6 +26,10 @@ class StatsComponent : public Component
     float GetArmor() const
     {
         return armor;
+    }
+    float GetMaxArmor() const
+    {
+        return maxArmor;
     }
 
     void TakeDamage(float damage)
@@ -57,6 +61,7 @@ class StatsComponent : public Component
   private:
     float maxHealth;
     float currentHealth;
+    float maxArmor;
     float armor;
 };
 

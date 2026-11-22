@@ -76,6 +76,13 @@ void AttackComponent::SetSwingDuration(float seconds)
 
 void AttackComponent::Update(float deltaTime)
 {
+    if (IsOwnerDead())
+    {
+        movement->SetSpeed(0.f);
+        cone->SetActive(false);
+        return;
+    }
+
     Aim();
 
     if (trigger == AttackTrigger::Input)
@@ -179,7 +186,6 @@ float AttackComponent::CalculateDamage() const
 
 void AttackComponent::Resolve()
 {
-    GameObject *protectedTarget = chase != nullptr ? chase->GetTarget() : nullptr;
     for (GameObject *target : GameWorld::Instance()->GetGameObjects())
     {
         if (target == nullptr || target == m_gameObject)
@@ -195,11 +201,13 @@ void AttackComponent::Resolve()
 
         stats->TakeDamage(CalculateDamage());
         LOG_INFO(m_gameObject->GetName() + " hit " + target->GetName());
-        if (stats->GetCurrentHealth() <= 0.f && target != protectedTarget)
-        {
-            GameWorld::Instance()->DestroyGameObject(target);
-        }
     }
+}
+
+bool AttackComponent::IsOwnerDead() const
+{
+    const auto *stats = m_gameObject->GetComponent<StatsComponent>();
+    return stats != nullptr && stats->GetCurrentHealth() <= 0.f;
 }
 
 bool AttackComponent::ChaseTargetInCone() const
