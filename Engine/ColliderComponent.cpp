@@ -12,6 +12,12 @@ sf::FloatRect ColliderComponent::GetBounds() const
     return bounds;
 }
 
+void ColliderComponent::ShiftBounds(float offsetX, float offsetY)
+{
+    bounds.position.x += offsetX;
+    bounds.position.y += offsetY;
+}
+
 void ColliderComponent::SetTrigger(bool newIsTrigger)
 {
     isTrigger = newIsTrigger;

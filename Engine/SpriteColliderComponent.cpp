@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SpriteColliderComponent.h"
 
+#include <cmath>
 #include <stdexcept>
 
 namespace Engine
@@ -32,10 +33,10 @@ void SpriteColliderComponent::Update(float deltaTime)
     }
 
     renderer->ApplyTransform();
-    bounds = sprite->getGlobalBounds();
-
-    const float width = bounds.size.x * boundsScaleX;
-    const float height = bounds.size.y * boundsScaleY;
+    const sf::Vector2u textureSize = sprite->getTexture().getSize();
+    const sf::Vector2f spriteScale = sprite->getScale();
+    const float width = std::fabs(static_cast<float>(textureSize.x) * spriteScale.x) * boundsScaleX;
+    const float height = std::fabs(static_cast<float>(textureSize.y) * spriteScale.y) * boundsScaleY;
     const sf::Vector2f center = sprite->getPosition();
     bounds.position = {center.x - width * 0.5f, center.y - height * 0.5f};
     bounds.size = {width, height};

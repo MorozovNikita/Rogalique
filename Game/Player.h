@@ -13,7 +13,8 @@ namespace Roguelike
 class Player
 {
   public:
-    Player(const Engine::Vector2Df &position);
+    Player(const Engine::Vector2Df &position, float tileSize);
+    void SetStairs(const Engine::Vector2Df &position, float tileSize);
     Engine::GameObject *GetGameObject();
 
   private:

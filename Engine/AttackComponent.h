@@ -29,6 +29,7 @@ class AttackComponent : public Component
     float SetAttackPower(float newAttackPower);
     void SetAttackClip(const std::string &newClipName);
     void SetSwingDuration(float seconds);
+    void SetEnabled(bool isEnabled);
 
     void Update(float deltaTime) override;
     void Render() override;
@@ -57,5 +58,6 @@ class AttackComponent : public Component
     float swingTime = 0.f;
     bool spaceWasDown = false;
     bool strikePending = false;
+    bool enabled = true;
 };
 } // namespace Engine

@@ -7,6 +7,9 @@
 #include <ChaseComponent.h>
 #include <GridPath.h>
 
+#include <algorithm>
+#include <map>
+#include <queue>
 #include <set>
 #include <utility>
 
@@ -16,6 +19,47 @@ namespace Roguelike
 {
 namespace
 {
+constexpr int kFloorTile = 0;
+constexpr int kStairsTile = 16;
+constexpr int kHoleTile = 17;
+
+GridCell FarthestWalkableCell(const std::set<GridCell> &walkable, const GridCell &start)
+{
+    GridCell farthest = start;
+    int farthestDistance = 0;
+    std::map<GridCell, int> distance;
+    std::queue<GridCell> pending;
+    distance.emplace(start, 0);
+    pending.push(start);
+
+    const GridCell steps[4] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    while (!pending.empty())
+    {
+        const GridCell current = pending.front();
+        pending.pop();
+        const int currentDistance = distance[current];
+        for (const GridCell &step : steps)
+        {
+            const GridCell next{current.first + step.first, current.second + step.second};
+            if (walkable.find(next) == walkable.end() || distance.find(next) != distance.end())
+            {
+                continue;
+            }
+
+            const int nextDistance = currentDistance + 1;
+            distance.emplace(next, nextDistance);
+            pending.push(next);
+            if (nextDistance > farthestDistance)
+            {
+                farthestDistance = nextDistance;
+                farthest = next;
+            }
+        }
+    }
+
+    return farthest;
+}
+
 int WallSpriteIndex(bool north, bool east, bool south, bool west)
 {
     const int mask = (north ? 1 : 0) | (east ? 2 : 0) | (south ? 4 : 0) | (west ? 8 : 0);
@@ -33,6 +77,8 @@ void DeveloperLevel::Start()
     const float stopDistance = 48.f;
 
     const std::set<GridCell> walkable = MazeGenerator(width, height).Generate();
+    const GridCell start = RandomGridCells(walkable, 1).front();
+    const GridCell exit = FarthestWalkableCell(walkable, start);
     auto isWall = [&](int x, int y) {
         if (x < 0 || y < 0 || x > width || y > height)
         {
@@ -54,7 +100,17 @@ void DeveloperLevel::Start()
             const bool borderY = y == 0 || y == height;
             if (!borderX && !borderY && walkable.find({x, y}) != walkable.end())
             {
-                floors.push_back(std::make_unique<Floor>(position, 0));
+                const GridCell cell{x, y};
+                int floorTile = kFloorTile;
+                if (cell == start)
+                {
+                    floorTile = kHoleTile;
+                }
+                else if (cell == exit)
+                {
+                    floorTile = kStairsTile;
+                }
+                floors.push_back(std::make_unique<Floor>(position, floorTile));
                 continue;
             }
 
@@ -69,8 +125,11 @@ void DeveloperLevel::Start()
         }
     }
 
-    const std::vector<GridCell> spawns = RandomGridCells(walkable, 4);
-    player = std::make_shared<Player>(GridCellCenter(spawns[0], tile));
+    player = std::make_shared<Player>(GridCellCenter(start, tile), tile);
+    if (exit != start)
+    {
+        player->SetStairs(GridCellCenter(exit, tile), tile);
+    }
 
     ChaseSettings chaseSettings;
     chaseSettings.target = player->GetGameObject();
@@ -79,11 +138,17 @@ void DeveloperLevel::Start()
     chaseSettings.detectionRadius = detectionRadius;
     chaseSettings.stopDistance = stopDistance;
 
+    std::set<GridCell> monsterCells = walkable;
+    monsterCells.erase(start);
+    monsterCells.erase(exit);
+    const std::size_t monsterCount = std::min<std::size_t>(3, monsterCells.size());
+    const std::vector<GridCell> monsterSpawns =
+        monsterCount == 0 ? std::vector<GridCell>{} : RandomGridCells(monsterCells, monsterCount);
+
     MonsterCatalog monstersFactory;
-    for (std::size_t index = 1; index < spawns.size(); ++index)
+    for (const GridCell &cell : monsterSpawns)
     {
-        monsters.push_back(
-            monstersFactory.Create(MonsterId::Vampire, GridCellCenter(spawns[index], tile), chaseSettings));
+        monsters.push_back(monstersFactory.Create(MonsterId::Vampire, GridCellCenter(cell, tile), chaseSettings));
     }
 
     music = std::make_unique<Music>("music");

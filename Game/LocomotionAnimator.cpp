@@ -30,8 +30,18 @@ void LocomotionAnimator::SetMirrorHorizontal(bool mirror)
     }
 }
 
+void LocomotionAnimator::SetEnabled(bool isEnabled)
+{
+    enabled = isEnabled;
+}
+
 void LocomotionAnimator::Update(float)
 {
+    if (!enabled)
+    {
+        return;
+    }
+
     const auto *stats = m_gameObject->GetComponent<Engine::StatsComponent>();
     if (animator->IsOneShotPlaying() || (stats != nullptr && stats->GetCurrentHealth() <= 0.f))
     {

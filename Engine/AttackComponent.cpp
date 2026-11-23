@@ -74,8 +74,31 @@ void AttackComponent::SetSwingDuration(float seconds)
     swingDuration = seconds;
 }
 
+void AttackComponent::SetEnabled(bool isEnabled)
+{
+    enabled = isEnabled;
+    if (!enabled && cone != nullptr)
+    {
+        cone->SetActive(false);
+    }
+}
+
 void AttackComponent::Update(float deltaTime)
 {
+    if (!enabled)
+    {
+        spaceWasDown = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+        if (movement != nullptr)
+        {
+            movement->SetSpeed(0.f);
+        }
+        if (cone != nullptr)
+        {
+            cone->SetActive(false);
+        }
+        return;
+    }
+
     if (IsOwnerDead())
     {
         movement->SetSpeed(0.f);

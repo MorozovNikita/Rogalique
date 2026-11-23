@@ -157,6 +157,7 @@
     <ClCompile Include="Game\MonsterFactory.cpp" />
     <ClCompile Include="Game\LocomotionAnimator.cpp" />
     <ClCompile Include="Game\DeathAnimator.cpp" />
+    <ClCompile Include="Game\LevelGateAnimator.cpp" />
     <ClCompile Include="Game\Music.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\State.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Game\MonsterFactory.h" />
     <ClInclude Include="Game\LocomotionAnimator.h" />
     <ClInclude Include="Game\DeathAnimator.h" />
+    <ClInclude Include="Game\LevelGateAnimator.h" />
     <ClInclude Include="Game\Music.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\ResourceHolder.h" />

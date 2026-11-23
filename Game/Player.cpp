@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "DeathAnimator.h"
+#include "LevelGateAnimator.h"
 #include "LocomotionAnimator.h"
 
 #include <AttackComponent.h>
@@ -16,7 +17,7 @@
 
 namespace Roguelike
 {
-Player::Player(const Engine::Vector2Df &position)
+Player::Player(const Engine::Vector2Df &position, float tileSize)
 {
     gameObject = Engine::GameWorld::Instance()->CreateGameObject("Player");
     auto transform = gameObject->GetComponent<Engine::TransformComponent>();
@@ -66,6 +67,18 @@ Player::Player(const Engine::Vector2Df &position)
     auto death = gameObject->AddComponent<DeathAnimator>();
     death->SetSound("death");
     death->SetDestroyOnFinish(false);
+
+    auto gate = gameObject->AddComponent<LevelGateAnimator>();
+    gate->BeginEmerge(tileSize, 160.f, 0.75f, 2.2f);
+}
+
+void Player::SetStairs(const Engine::Vector2Df &position, float tileSize)
+{
+    auto *gate = gameObject->GetComponent<LevelGateAnimator>();
+    if (gate != nullptr)
+    {
+        gate->SetStairs(position, tileSize);
+    }
 }
 
 Engine::GameObject *Player::GetGameObject()
